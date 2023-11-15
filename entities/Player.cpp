@@ -36,16 +36,16 @@ Player::~Player()
     
 }
 
-//Functions
-void Player::update(const float &dt)
+void Player::updateAttack()
 {
-    this->movementComponent->update(dt);
-    bool not_priority = false;
-
     if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
     {
        this->attacking = true;
     }
+}
+
+void Player::updateAnimation(const float &dt)
+{
     if(this->attacking)
     {
         if(this->animationComponent->play("ATTACK", dt, true))
@@ -54,7 +54,7 @@ void Player::update(const float &dt)
     }
     if(this->movementComponent->getState(IDLE))
     {
-        this->animationComponent->play("IDLE", dt, not_priority);
+        this->animationComponent->play("IDLE", dt, false);
     }
     else if(this->movementComponent->getState(MOVING_LEFT))
     {
@@ -63,7 +63,7 @@ void Player::update(const float &dt)
             this->sprite.setOrigin(0.f, 0.f);
             this->sprite.setScale(1.f, 1.f);
         }
-        this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity(), not_priority);
+        this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity(), false);
     }else if(this->movementComponent->getState(MOVING_RIGHT))
     {
         if(this->sprite.getScale().x < 0.f)
@@ -71,17 +71,23 @@ void Player::update(const float &dt)
             this->sprite.setOrigin(258.f, 0.f);
             this->sprite.setScale(-1.f, 1.f);
         }
-        this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity(), not_priority);
+        this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity(), false);
     }
     else if(this->movementComponent->getState(MOVING_UP))
     {
-        this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity(), not_priority);
+        this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity(), false);
     }
     else if(this->movementComponent->getState(MOVING_DOWN))
     {
-        this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity(), not_priority);
+        this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity(), false);
     }
-    
+}
 
+// Functions
+void Player::update(const float &dt)
+{
+    this->movementComponent->update(dt);
+    this->updateAttack();
+    this->updateAnimation(dt);
     this->hitboxComponent->update();
 }
