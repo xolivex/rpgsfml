@@ -1,12 +1,13 @@
 #ifndef GAME_STATE_H
 #define GAME_STATE_H
 #include "State.h"
-
+#include "../GUI/PauseMenu.h"
 class GameState : public State
 {
 private:
     //variables
     Player * player;
+    Pausemenu pmenu;
     //Functions
     void initKeybinds();
     void initTextures();

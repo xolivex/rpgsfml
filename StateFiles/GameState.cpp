@@ -35,7 +35,7 @@ void GameState::initPlayers()
 
 //Constructors and Destructors
 GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states)
-    : State(window, supportedKeys, states)
+    : State(window, supportedKeys, states), pmenu(*window)
 {
     this->initKeybinds();
     this->initTextures();
@@ -69,17 +69,25 @@ void GameState::updateInput(const float &dt)
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("CLOSE"))))
     {
-        this->endState();
+        //this->endState();
+        this->paused = true;
     }
 }
 
 
 void GameState::update(const float & dt)
 {
-    this->updateMousePositions();
-    this->updateInput(dt);
+    if(!this->paused)
+    {
+        this->updateMousePositions();
+        this->updateInput(dt);
 
-    this->player->update(dt);
+        this->player->update(dt);
+    }
+    else
+    {
+        pmenu.update();
+    }
 }
 
 void GameState::render(sf::RenderTarget * target)
@@ -89,4 +97,8 @@ void GameState::render(sf::RenderTarget * target)
         target = this->window;
     }
     this->player->render(*target);
+    if(this->paused)
+    {
+        pmenu.render(*target);
+    }
 }

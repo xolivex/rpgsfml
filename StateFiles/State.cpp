@@ -23,6 +23,16 @@ void State::endState()
         this->quit = true;
 }
 
+void State::unpausedState()
+{
+    this->paused = false;
+}
+
+void State::pausedState()
+{
+    this->paused = true;
+}
+
 void State::updateMousePositions()
 {
     this->mousePosScreen = sf::Mouse::getPosition();
