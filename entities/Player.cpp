@@ -48,8 +48,27 @@ void Player::updateAnimation(const float &dt)
 {
     if(this->attacking)
     {
+        if(this->sprite.getScale().x > 0.f)//FACING LEFT
+        {
+            this->sprite.setOrigin(96.f, 0.f);
+        }
+        else //FACING RIGHT
+        {
+            this->sprite.setOrigin(258.f + 96.F, 0.f);
+        }
+
         if(this->animationComponent->play("ATTACK", dt, true))
+        {
+            if(this->sprite.getScale().x > 0.f)//FACING LEFT
+            {
+                this->sprite.setOrigin(0.f, 0.f);
+            }
+            else //FACING RIGHT
+            {
+                this->sprite.setOrigin(258.f, 0.f);
+            }
             this->attacking = false;
+        }
             
     }
     if(this->movementComponent->getState(IDLE))
@@ -66,7 +85,7 @@ void Player::updateAnimation(const float &dt)
         this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity(), false);
     }else if(this->movementComponent->getState(MOVING_RIGHT))
     {
-        if(this->sprite.getScale().x < 0.f)
+        if(this->sprite.getScale().x > 0.f)
         {
             this->sprite.setOrigin(258.f, 0.f);
             this->sprite.setScale(-1.f, 1.f);
