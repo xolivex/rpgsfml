@@ -58,13 +58,19 @@ void Player::update(const float &dt)
     }
     else if(this->movementComponent->getState(MOVING_LEFT))
     {
-        this->sprite.setOrigin(0.f, 0.f);
-        this->sprite.setScale(1.f, 1.f);
+        if(this->sprite.getScale().x < 0.f)
+        {
+            this->sprite.setOrigin(0.f, 0.f);
+            this->sprite.setScale(1.f, 1.f);
+        }
         this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity(), not_priority);
     }else if(this->movementComponent->getState(MOVING_RIGHT))
     {
-        this->sprite.setOrigin(258.f, 0.f);
-        this->sprite.setScale(-1.f, 1.f);
+        if(this->sprite.getScale().x < 0.f)
+        {
+            this->sprite.setOrigin(258.f, 0.f);
+            this->sprite.setScale(-1.f, 1.f);
+        }
         this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity(), not_priority);
     }
     else if(this->movementComponent->getState(MOVING_UP))
