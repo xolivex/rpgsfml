@@ -25,13 +25,17 @@ private:
     sf::Font& font;
 
     std::map<std::string, Button*> buttons;
+    //Functions 
+    void initText();
 public:
     PausedMenu(sf::RenderWindow& window, sf::Font& font);
     virtual ~PausedMenu();
 
     //Functions
-    void initText();
-    void update();
+    std::map<std::string, Button*>& getButtons();
+    const bool isPressed(const std::string key);
+    void addButton(const std::string key, float y, const std::string text);
+    void update(const sf::Vector2f& mousePos);
     void render(sf::RenderTarget & target);
 };
 

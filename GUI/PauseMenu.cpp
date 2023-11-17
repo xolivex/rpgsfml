@@ -1,5 +1,24 @@
 #include "PauseMenu.h"
 
+std::map<std::string, Button *> &PausedMenu::getButtons()
+{
+    return this->buttons;
+}
+
+const bool PausedMenu::isPressed(const std::string key)
+{
+    return this->buttons[key]->isPressed();   
+}
+
+void PausedMenu::addButton(const std::string key, float y, const std::string text)
+{
+    float x = this->container.getPosition().x + this->container.getSize().x / 2 - 250.f / 2;
+
+    this->buttons[key] = new Button(x, y, 150.f, 50.f, &this->font, text, 60,
+        sf::Color(150,150,150,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
+        sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
+}
+
 void PausedMenu::initText()
 {
     this->text.setFont(this->font);
@@ -44,8 +63,12 @@ PausedMenu::~PausedMenu()
 }
 
 
-void PausedMenu::update()
+void PausedMenu::update(const sf::Vector2f& mousePos)
 {
+    for(auto &i : this->buttons)
+    {
+        i.second->update(mousePos);
+    }
 }
 
 void PausedMenu::render(sf::RenderTarget &target)

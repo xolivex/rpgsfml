@@ -36,6 +36,7 @@ void GameState::initPlayers()
 void GameState::initPausedMenu()
 {
     pmenu = new PausedMenu(*this->window,this->font);
+    this->pmenu->addButton("QUIT", 800.f, "quit");
 }
 
 void GameState::initFonts()
@@ -73,6 +74,7 @@ void GameState::updateInput(const float &dt)
         }
         else
         {
+            
             this->paused =  false;
         }
     }
@@ -113,7 +115,12 @@ void GameState::update(const float & dt)
     }
     else
     {
-        pmenu->update();
+        this->pmenu->update(this->mousePosView);
+        if(this->pmenu->isPressed("QUIT"))
+        {
+            this->endState();
+        }
+        
     }
 }
 
