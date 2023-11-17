@@ -83,7 +83,6 @@ private:
             if(mod_porcent < 0.5f)
                 mod_porcent = 0.5f;
 
-            
             this->timer +=  mod_porcent * 100.f * dt;
             if(this->timer >= this->animationTimer)
             {

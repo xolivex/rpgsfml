@@ -33,22 +33,52 @@ void GameState::initPlayers()
     this->player = new Player(200.f,200.f,this->textures["PLAYER_SHEET"]);
 }
 
+void GameState::initPausedMenu()
+{
+    pmenu = new PausedMenu(*this->window,this->font);
+}
+
+void GameState::initFonts()
+{
+    if(!this->font.loadFromFile("Fonts/Dosis-Light.ttf"))
+    {
+        throw("ERROR::GAMESTATE::COULD NOT LOAD FONT");
+    }
+}
+
 //Constructors and Destructors
 GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states)
-    : State(window, supportedKeys, states), pmenu(*window)
+    : State(window, supportedKeys, states)
 {
     this->initKeybinds();
     this->initTextures();
     this->initPlayers();
+    this->initFonts();
+    this->initPausedMenu();  
 }
 GameState::~GameState()
 {
+    delete pmenu;
     delete this->player;
 }
 
-
-
 void GameState::updateInput(const float &dt)
+{
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("CLOSE"))))
+    {
+        //this->endState();
+        if(!paused)
+        {
+            this->paused = true;
+        }
+        else
+        {
+            this->paused =  false;
+        }
+    }
+}
+
+void GameState::updatePlayerInput(const float &dt)
 {
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_LEFT"))))
@@ -67,26 +97,23 @@ void GameState::updateInput(const float &dt)
     {
         this->player->move(0.f, 1.f, dt);
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("CLOSE"))))
-    {
-        //this->endState();
-        this->paused = true;
-    }
+    
 }
 
 
 void GameState::update(const float & dt)
 {
+    this->updateMousePositions();
+    this->updateInput(dt);
+    
     if(!this->paused)
     {
-        this->updateMousePositions();
-        this->updateInput(dt);
-
+        this->updatePlayerInput(dt);
         this->player->update(dt);
     }
     else
     {
-        pmenu.update();
+        pmenu->update();
     }
 }
 
@@ -99,6 +126,6 @@ void GameState::render(sf::RenderTarget * target)
     this->player->render(*target);
     if(this->paused)
     {
-        pmenu.render(*target);
+        pmenu->render(*target);
     }
 }

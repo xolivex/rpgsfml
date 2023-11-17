@@ -15,19 +15,22 @@
 #include <SFML/System.hpp>
 #include "../ResourceFiles/Button.h"
 
-class Pausemenu
+class PausedMenu
 {
 private:
     
     sf::RectangleShape background;
     sf::RectangleShape container;
+    sf::Text text;
+    sf::Font& font;
 
     std::map<std::string, Button*> buttons;
 public:
-    Pausemenu(sf::RenderWindow& window);
-    virtual ~Pausemenu();
+    PausedMenu(sf::RenderWindow& window, sf::Font& font);
+    virtual ~PausedMenu();
 
     //Functions
+    void initText();
     void update();
     void render(sf::RenderTarget & target);
 };
