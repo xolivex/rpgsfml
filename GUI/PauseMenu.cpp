@@ -12,9 +12,9 @@ const bool PausedMenu::isPressed(const std::string key)
 
 void PausedMenu::addButton(const std::string key, float y, const std::string text)
 {
-    float x = this->container.getPosition().x + this->container.getSize().x / 2 - 250.f / 2;
+    float x = this->container.getPosition().x + this->container.getSize().x / 2.f - 250.f / 2.f;
 
-    this->buttons[key] = new Button(x, y, 150.f, 50.f, &this->font, text, 60,
+    this->buttons[key] = new Button(x, y, 150.f, 50.f, &this->font, text, 50,
         sf::Color(150,150,150,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
         sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
 }
@@ -24,8 +24,8 @@ void PausedMenu::initText()
     this->text.setFont(this->font);
     this->text.setString("PAUSED");
     this->text.setCharacterSize(60);
-    this->text.setPosition(this->container.getPosition().x + 
-        this->container.getGlobalBounds().width / 2.f - this->text.getGlobalBounds().width / 2.f,
+    this->text.setPosition(this->container.getPosition().x + this->container.getSize().x / 2.f
+    - this->text.getGlobalBounds().width / 2.f,
         this->container.getPosition().y + 30.f);
 }
 //Constructor
