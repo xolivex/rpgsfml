@@ -1,0 +1,69 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build-debug",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-std=c++17",
+                "src/*.cpp",
+                "StateFiles/*.cpp",
+                "ResourceFiles/*.cpp",
+                "Components/*.cpp",
+                "entities/*.cpp",
+                "GUI/*.cpp",
+                "-o",
+                "debug/Game_debug",
+                "-LC:/MingW/64b/mingw64-7-3-0/lib",
+                "-IC:/MingW/64b/mingw64-7-3-0/include",
+                "-lsfml-graphics",
+                "-lsfml-window",
+                "-lsfml-system",
+                "-lsfml-audio"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "build-release",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-O3",
+                "-std=c++17",
+                "src/*.cpp",
+                "StateFiles/*.cpp",
+                "ResourceFiles/*.cpp",
+                "Components/*.cpp",
+                "entities/*.cpp",
+                "GUI/*.cpp",
+                "-o",
+                "debug/Game_release",
+                "-LC:/MingW/64b/mingw64-7-3-0/lib",
+                "-IC:/MingW/64b/mingw64-7-3-0/include",
+                "-lsfml-graphics",
+                "-lsfml-window",
+                "-lsfml-system",
+                "-lsfml-audio"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        }
+    ]
+}
