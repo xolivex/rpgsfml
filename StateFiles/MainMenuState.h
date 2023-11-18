@@ -5,6 +5,7 @@
 #include "../ResourceFiles/Button.h"
 #include "GameState.h"
 #include "EditorState.h"
+#include "SettingsState.h"
 
 class MainMenuState : public State
 {

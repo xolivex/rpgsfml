@@ -53,7 +53,7 @@ void MainMenuState::initButtons()
         sf::Color(150,150,150,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
         sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
 
-    this->buttons["SETTINGS"] = new Button(100.f, 150.f, 150.f, 50.f, &this->font,
+    this->buttons["SETTINGS_STATE"] = new Button(100.f, 150.f, 150.f, 50.f, &this->font,
          "settings", 30,
         sf::Color(150,150,150,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
         sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
@@ -105,16 +105,25 @@ void MainMenuState::updateButtons()
         it.second->update(this->mousePosView);
     }
 
+    //GAME
     if(this->buttons["GAME_STATE"]->isPressed())
     {
         this->states->push(new GameState(this->window, this->supportedKeys, this->states));
     }
 
+    //SETTINGS
+    if(this->buttons["SETTINGS_STATE"]->isPressed())
+    {
+        this->states->push(new SettingsState(this->window, this->supportedKeys, this->states));
+    }
+    
+    //EDITOR
     if(this->buttons["EDITOR_STATE"]->isPressed())
     {
         this->states->push(new EditorState(this->window, this->supportedKeys, this->states));
     }
 
+    //EXIT
     if(this->buttons["EXIT"]->isPressed())
     {
         this->endState();
