@@ -13,6 +13,8 @@
 
 enum button_states{BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE};
 
+namespace gui
+{
 
 class Button
 {
@@ -44,4 +46,5 @@ public:
 };
 
 
+}
 #endif //BUTTON_H

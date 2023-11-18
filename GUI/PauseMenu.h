@@ -13,7 +13,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
-#include "../ResourceFiles/Button.h"
+#include "../ResourceFiles/Gui.h"
 
 class PausedMenu
 {
@@ -24,7 +24,7 @@ private:
     sf::Text text;
     sf::Font& font;
 
-    std::map<std::string, Button*> buttons;
+    std::map<std::string, gui::Button*> buttons;
     //Functions 
     void initText();
 public:
@@ -32,7 +32,7 @@ public:
     virtual ~PausedMenu();
 
     //Functions
-    std::map<std::string, Button*>& getButtons();
+    std::map<std::string, gui::Button*>& getButtons();
     const bool isPressed(const std::string key);
     void addButton(const std::string key, float y, const std::string text);
     void update(const sf::Vector2f& mousePos);

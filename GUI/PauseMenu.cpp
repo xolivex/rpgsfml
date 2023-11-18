@@ -1,6 +1,6 @@
 #include "PauseMenu.h"
 
-std::map<std::string, Button *> &PausedMenu::getButtons()
+std::map<std::string, gui::Button *> &PausedMenu::getButtons()
 {
     return this->buttons;
 }
@@ -14,7 +14,7 @@ void PausedMenu::addButton(const std::string key, float y, const std::string tex
 {
     float x = this->container.getPosition().x + this->container.getSize().x / 2.f - 250.f / 2.f;
 
-    this->buttons[key] = new Button(x, y, 150.f, 50.f, &this->font, text, 50,
+    this->buttons[key] = new gui::Button(x, y, 150.f, 50.f, &this->font, text, 50,
         sf::Color(150,150,150,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
         sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
 }
