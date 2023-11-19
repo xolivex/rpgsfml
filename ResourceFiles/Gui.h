@@ -48,11 +48,11 @@ public:
     //Acessors
     const bool isPressed() const;
     const std::string getText() const;
-    const short unsigned getId() const;
+    const unsigned short& getId() const;
 
     //Modifiers
     void setText(const std::string text);
-    void setId(short unsigned id);
+    void setId(unsigned short id);
     //Functions
     void update(const sf::Vector2f& mousePos);
     void render(sf::RenderTarget& target);
@@ -77,6 +77,7 @@ public:
         unsigned short numbElements, unsigned short default_index = 0);
     ~DropDownList();
     //Accessors
+    const short unsigned& getActiveElementId() const;
     const bool getkeyTime();
 
     void updatekeyTime(const float& dt);

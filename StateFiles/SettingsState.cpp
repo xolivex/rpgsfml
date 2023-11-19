@@ -4,6 +4,7 @@
 //inicializer functions
 void SettingsState::initVariables()
 {
+    this->modes = sf::VideoMode::getFullscreenModes();
 }
 
 void SettingsState::initBackground()
@@ -49,16 +50,35 @@ void SettingsState::initFonts()
 void SettingsState::initGui()
 {
     
+    this->buttons["APPLY"] = new gui::Button(
+        600.f, 600.f, 150.f, 50.f,
+         &this->font, "Apply", 30,
+        sf::Color(150,150,150,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
+        sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
 
     this->buttons["EXIT"] = new gui::Button(
-        300.f, 350.f, 150.f, 50.f,
+        750.f, 600.f, 150.f, 50.f,
          &this->font, "Back", 30,
         sf::Color(150,150,150,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
         sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
 
-    std::string li [] = {"1600x900","1024x768","800x600","640x480"};
-    this->dropDownLists["RESOLUTION"] = new gui::DropDownList(100, 100, 200, 50, this->font, li, 4);
+    std::vector<std::string> modes_str;
+    for(auto &i : this->modes)
+    {
+        modes_str.push_back(std::to_string(i.width) + "x" + std::to_string(i.height));
+    }
+    this->dropDownLists["RESOLUTION"] = new gui::DropDownList(500.f, 100.f, 200.f, 50.f, this->font, modes_str.data(), modes_str.size());
     
+}
+
+void SettingsState::initText()
+{
+    this->settingsText.setFont(this->font);
+    this->settingsText.setCharacterSize(50);
+    this->settingsText.setPosition(100.f, 100.f);
+    this->settingsText.setString(
+        "Resolutions \nFullScreen \nFrameRate \nVerticalSync \nAntiAliasing"
+    );
 }
 
 //MAINMENU
@@ -70,6 +90,7 @@ SettingsState::SettingsState(sf::RenderWindow *window, std::map<std::string, int
     this->initKeybinds();
     this->initFonts();
     this->initGui();
+    this->initText();
 
     
 }
@@ -110,6 +131,12 @@ void SettingsState::updateGui(const float & dt)
         it.second->update(this->mousePosView, dt);
     }
 
+    if(this->buttons["APPLY"]->isPressed() && this->dropDownLists["RESOLUTION"]->getkeyTime())
+    {
+        this->window->create(this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()],"teste",
+         sf::Style::Titlebar | sf::Style::Close);
+    }
+
     if(this->buttons["EXIT"]->isPressed())
     {
         this->endState();
@@ -143,6 +170,7 @@ void SettingsState::render(sf::RenderTarget * target)
     {
         target = this->window;
     }
-    target->draw(background);
+    target->draw(this->background);
+    target->draw(this->settingsText);
     this->renderGui(*target);
 }

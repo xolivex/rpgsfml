@@ -7,6 +7,7 @@ gui::Button::Button(float x, float y, float width, float height, sf::Font * font
         sf::Color outline_active_color, short unsigned id
         )
 {
+    this->id = id;
     this->buttonState = BTN_IDLE;
     this->shape.setPosition(sf::Vector2f(x, y));
     this->shape.setSize(sf::Vector2f(width, height));
@@ -43,16 +44,7 @@ gui::Button::~Button()
 {
     
 }
-//Modifiers
-void gui::Button::setText(const std::string text)
-{
-    this->text.setString(text);
-}
 
-void gui::Button::setId(short unsigned id)
-{
-    this->id = id;
-}
 
 void gui::Button::update(const sf::Vector2f &mousePos)
 {
@@ -112,10 +104,22 @@ const std::string gui::Button::getText() const
     return this->text.getString();
 }
 
-const short unsigned gui::Button::getId() const
+const unsigned short& gui::Button::getId() const
 {
     return this->id;
 }
+//Modifiers
+void gui::Button::setText(const std::string text)
+{
+    this->text.setString(text);
+}
+
+void gui::Button::setId(unsigned short id)
+{
+    this->id = id;
+}
+
+
 
 void gui::Button::render(sf::RenderTarget &target)
 {
@@ -138,16 +142,15 @@ gui::DropDownList::DropDownList(
                 sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50)
             );
     
-    for(size_t i = 0; i < numbElements; i++)
+    for(size_t i = 0; i < numbElements; ++i)
     {
         this->list.push_back(
             new gui::Button(
-                x, y + ((i+1) * height), width, height,
+                x, y + ((i + 1) * height), width, height,
                 &this->font, list[i], 12,
                 sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250), sf::Color(20, 20, 20, 50),
                 sf::Color(70, 70, 70, 150), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
-                sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
-                i
+                sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50), i
                 )
             );
     }
@@ -160,6 +163,11 @@ gui::DropDownList::~DropDownList()
     {
         delete this->list[i];
     }
+}
+
+const short unsigned & gui::DropDownList::getActiveElementId() const
+{
+    return this->activeElement->getId();
 }
 
 const bool gui::DropDownList::getkeyTime()
@@ -204,6 +212,7 @@ void gui::DropDownList::update(const sf::Vector2f &mousePos, const float& dt)
             {
                 this->activeElement->setText(i->getText());
                 this->activeElement->setId(i->getId());
+                std::cout << this->activeElement->getId() << "\n";
                 this->showList = false;
             }
         }
