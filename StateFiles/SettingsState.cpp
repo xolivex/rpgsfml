@@ -46,18 +46,18 @@ void SettingsState::initFonts()
     }
 }
 
-void SettingsState::initButtons()
+void SettingsState::initGui()
 {
     
 
     this->buttons["EXIT"] = new gui::Button(
-        100.f, 350.f, 150.f, 50.f,
-         &this->font, "Quit", 30,
+        300.f, 350.f, 150.f, 50.f,
+         &this->font, "Back", 30,
         sf::Color(150,150,150,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
         sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
 
-    std::string li [] = {"1244","12341","6574","3465346","klajdslkfa"};
-    this->ddl = new gui::DropDownList(100, 100, 200, 50, this->font, li, 5);
+    std::string li [] = {"1600x900","1024x768","800x600","640x480"};
+    this->dropDownLists["RESOLUTION"] = new gui::DropDownList(100, 100, 200, 50, this->font, li, 4);
     
 }
 
@@ -69,7 +69,7 @@ SettingsState::SettingsState(sf::RenderWindow *window, std::map<std::string, int
     this->initBackground();
     this->initKeybinds();
     this->initFonts();
-    this->initButtons();
+    this->initGui();
 
     
 }
@@ -81,7 +81,13 @@ SettingsState::~SettingsState()
     {
         delete it->second;
     }
-    delete ddl;
+
+    auto it2 = this->dropDownLists.begin();
+    for(it2 = this->dropDownLists.begin();it2 != this->dropDownLists.end(); ++it2)
+    {
+        delete it2->second;
+    }
+    
 }
 
 
@@ -92,13 +98,17 @@ void SettingsState::updateInput(const float &dt)
    
 
 
-void SettingsState::updateButtons()
+void SettingsState::updateGui(const float & dt)
 {
     for(auto &it : this->buttons)
     {
         it.second->update(this->mousePosView);
     }
 
+    for(auto &it : this->dropDownLists)
+    {
+        it.second->update(this->mousePosView, dt);
+    }
 
     if(this->buttons["EXIT"]->isPressed())
     {
@@ -110,14 +120,18 @@ void SettingsState::update(const float & dt)
 {
     this->updateMousePositions();
     this->updateInput(dt);
-    this->updateButtons();
-    this->ddl->update(this->mousePosView, dt);
+    this->updateGui(dt);
 
 }
 
-void SettingsState::renderButtons(sf::RenderTarget& target)
+void SettingsState::renderGui(sf::RenderTarget& target)
 {
     for(auto &it : this->buttons)
+    {
+        it.second->render(target);
+    }
+
+    for(auto &it : this->dropDownLists)
     {
         it.second->render(target);
     }
@@ -130,6 +144,5 @@ void SettingsState::render(sf::RenderTarget * target)
         target = this->window;
     }
     target->draw(background);
-    this->renderButtons(*target);
-    this->ddl->render(*target);
+    this->renderGui(*target);
 }

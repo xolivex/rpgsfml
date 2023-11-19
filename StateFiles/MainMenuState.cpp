@@ -135,11 +135,6 @@ void MainMenuState::update(const float & dt)
     this->updateMousePositions();
     this->updateInput(dt);
     this->updateButtons();
-
-
-    
-
-    
 }
 
 void MainMenuState::renderButtons(sf::RenderTarget& target)
