@@ -20,6 +20,7 @@ class Button
 {
 private:
     short unsigned buttonState;
+    short unsigned id;
 
     sf::RectangleShape shape;
     sf::Font* font;
@@ -32,17 +33,26 @@ private:
     sf::Color idleColor;
     sf::Color hoverColor;
     sf::Color activeColor;
+
+    sf::Color outlineIdleColor;
+    sf::Color outlineHoverColor;
+    sf::Color outlineActiveColor;
 public:
     Button(float x, float y, float width, float height, sf::Font * font, std::string text, unsigned short character_size,
         sf::Color text_idle_color, sf::Color text_hover_color,sf::Color text_active_color,
-        sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor);
+        sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor,
+        sf::Color outline_idle_color = sf::Color::Transparent, sf::Color outline_hover_color = sf::Color::Transparent,
+        sf::Color outline_active_color = sf::Color::Transparent, short unsigned id = 0
+        );
     ~Button();
     //Acessors
     const bool isPressed() const;
     const std::string getText() const;
+    const short unsigned getId() const;
 
     //Modifiers
     void setText(const std::string text);
+    void setId(short unsigned id);
     //Functions
     void update(const sf::Vector2f& mousePos);
     void render(sf::RenderTarget& target);

@@ -2,12 +2,16 @@
 
 gui::Button::Button(float x, float y, float width, float height, sf::Font * font, std::string text, unsigned short character_size,
         sf::Color text_idle_color, sf::Color text_hover_color,sf::Color text_active_color,
-        sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color)
+        sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color,
+        sf::Color outline_idle_color, sf::Color outline_hover_color,
+        sf::Color outline_active_color, short unsigned id
+        )
 {
     this->buttonState = BTN_IDLE;
     this->shape.setPosition(sf::Vector2f(x, y));
     this->shape.setSize(sf::Vector2f(width, height));
     this->shape.setFillColor(idle_Color);
+    this->shape.setOutlineThickness(1.f);
 
     this->font = font;
     this->text.setFont(*this->font);
@@ -27,6 +31,10 @@ gui::Button::Button(float x, float y, float width, float height, sf::Font * font
     this->hoverColor = hover_Color;
     this->activeColor = active_Color;
 
+    this->outlineIdleColor = outline_idle_color;
+    this->outlineHoverColor = outline_hover_color;
+    this->outlineActiveColor = outline_active_color;
+
     
 
 }
@@ -39,6 +47,11 @@ gui::Button::~Button()
 void gui::Button::setText(const std::string text)
 {
     this->text.setString(text);
+}
+
+void gui::Button::setId(short unsigned id)
+{
+    this->id = id;
 }
 
 void gui::Button::update(const sf::Vector2f &mousePos)
@@ -65,18 +78,23 @@ void gui::Button::update(const sf::Vector2f &mousePos)
     case BTN_IDLE:
         this->shape.setFillColor(this->idleColor);
         this->text.setFillColor(this->textIdleColor);
+        this->shape.setOutlineColor(this->outlineIdleColor);
         break;
     case BTN_HOVER:
         this->shape.setFillColor(this->hoverColor);
         this->text.setFillColor(this->textHoverColor);
+        this->shape.setOutlineColor(this->outlineHoverColor);
         break;
     case BTN_ACTIVE:
         this->shape.setFillColor(this->activeColor);
         this->text.setFillColor(this->textActiveColor);
+        this->shape.setOutlineColor(this->outlineActiveColor);
         break;
     
     default:
         this->shape.setFillColor(sf::Color::Red);
+        this->text.setFillColor(sf::Color::Blue);
+        this->shape.setOutlineColor(sf::Color::Green);
         break;
     }
 }
@@ -92,6 +110,11 @@ const bool gui::Button::isPressed() const
 const std::string gui::Button::getText() const
 {
     return this->text.getString();
+}
+
+const short unsigned gui::Button::getId() const
+{
+    return this->id;
 }
 
 void gui::Button::render(sf::RenderTarget &target)
@@ -110,8 +133,9 @@ gui::DropDownList::DropDownList(
     this->activeElement = new gui::Button(
                 x, y, width, height,
                 &this->font, list[default_index], 12,
-                sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250), sf::Color(20, 20, 20, 50),
-                sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200)
+                sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 250), sf::Color(20, 20, 20, 50),
+                sf::Color(70, 70, 70, 150), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
+                sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50)
             );
     
     for(size_t i = 0; i < numbElements; i++)
@@ -121,7 +145,10 @@ gui::DropDownList::DropDownList(
                 x, y + ((i+1) * height), width, height,
                 &this->font, list[i], 12,
                 sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250), sf::Color(20, 20, 20, 50),
-                sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200))
+                sf::Color(70, 70, 70, 150), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
+                sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
+                i
+                )
             );
     }
 }
@@ -176,6 +203,7 @@ void gui::DropDownList::update(const sf::Vector2f &mousePos, const float& dt)
             if(i->isPressed() && this->getkeyTime())
             {
                 this->activeElement->setText(i->getText());
+                this->activeElement->setId(i->getId());
                 this->showList = false;
             }
         }
