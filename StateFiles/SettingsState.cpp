@@ -50,10 +50,15 @@ void SettingsState::initButtons()
 {
     
 
-    this->buttons["EXIT"] = new gui::Button(100.f, 350.f, 150.f, 50.f, &this->font,
-         "Quit", 30,
+    this->buttons["EXIT"] = new gui::Button(
+        100.f, 350.f, 150.f, 50.f,
+         &this->font, "Quit", 30,
         sf::Color(150,150,150,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
         sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
+
+    std::string li [] = {"1244","12341","6574","3465346","klajdslkfa"};
+    this->ddl = new gui::DropDownList(100, 100, 200, 50, this->font, li, 5);
+    
 }
 
 //MAINMENU
@@ -76,6 +81,7 @@ SettingsState::~SettingsState()
     {
         delete it->second;
     }
+    delete ddl;
 }
 
 
@@ -105,6 +111,7 @@ void SettingsState::update(const float & dt)
     this->updateMousePositions();
     this->updateInput(dt);
     this->updateButtons();
+    this->ddl->update(this->mousePosView, dt);
 
 }
 
@@ -124,4 +131,5 @@ void SettingsState::render(sf::RenderTarget * target)
     }
     target->draw(background);
     this->renderButtons(*target);
+    this->ddl->render(*target);
 }
