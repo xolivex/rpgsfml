@@ -1,7 +1,7 @@
 #ifndef MAIN_MENU_STATE_H
 #define MAIN_MENU_STATE_H
+
 #include "State.h"
-#include <iostream>
 #include "../ResourceFiles/Gui.h"
 #include "GameState.h"
 #include "EditorState.h"

@@ -1,18 +1,7 @@
 #ifndef MOVEMENT_COMPONENT_H
 #define MOVEMENT_COMPONENT_H
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <fstream>
-#include <sstream>
-#include <stack>
-#include <map>
-#include <vector>
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/System.hpp>
+#include "../includes.h"
 
 enum movement_state {IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, MOVING_DOWN};
 

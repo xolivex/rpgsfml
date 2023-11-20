@@ -1,6 +1,7 @@
 #include "Entity.h"
 
 
+
 void Entity::initVariables()
 {
     this->movementComponent = NULL;

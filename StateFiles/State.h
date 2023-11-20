@@ -1,9 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
-#include <SFML/Graphics.hpp>
-#include <vector>
-#include <stack>
 
+#include "../includes.h"
 #include "../entities/Player.h"
 
 class State{
