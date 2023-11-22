@@ -8,45 +8,29 @@
 void Game::initVariables()
 {
     this->window = NULL;
-    this->fullscreen = false;
     this->dt = 0.f;
+}
+
+void Game::initGraphicsSettings()
+{
+    this->gfxSettings.LoadFromFile("Config/graphics.ini");
 }
 
 void Game::initGameWindow() 
 {
     initVariables();
-    std::ifstream ifs("Config/window.ini");
-    std::string title = "None";
-    sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
-    bool fullscreen = false;
-    unsigned short framerate_limit = 60;
-    bool vertical_sync_enabled = false;
-    unsigned short antialiasing_level = 0;
-
-    if(ifs.is_open())
-    {
-        std::getline(ifs, title);
-        ifs >> window_bounds.width >> window_bounds.height;
-        ifs >> fullscreen;
-        ifs >> framerate_limit;
-        ifs >> vertical_sync_enabled;
-        ifs >> antialiasing_level;
-        //define the resolution of workspace
-        
-    }
-    ifs.close();
-
-    this->fullscreen = fullscreen;
-    this->window_settings.antialiasingLevel = antialiasing_level;
-    if(this->fullscreen){
-        this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, this->window_settings);
+    
+    if(this->gfxSettings.fullscreen){
+        this->window = new sf::RenderWindow(this->gfxSettings.resolution,
+        this->gfxSettings.title, sf::Style::Fullscreen, this->gfxSettings.contextSettings);
     }
     else{
-        this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close, this->window_settings);
+        this->window = new sf::RenderWindow(this->gfxSettings.resolution,
+        this->gfxSettings.title, sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings);
     }
 
-    this->window->setFramerateLimit(framerate_limit);
-    this->window->setVerticalSyncEnabled(vertical_sync_enabled);
+    this->window->setFramerateLimit(this->gfxSettings.frameRateLimit);
+    this->window->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
 }
 
 void Game::initStates()

@@ -130,6 +130,9 @@ void GameState::render(sf::RenderTarget * target)
     {
         target = this->window;
     }
+
+    //this->map.render(*target);
+
     this->player->render(*target);
     if(this->paused)
     {

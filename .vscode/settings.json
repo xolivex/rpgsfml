@@ -47,6 +47,9 @@
         "list": "cpp",
         "functional": "cpp",
         "cinttypes": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "chrono": "cpp",
+        "ratio": "cpp",
+        "thread": "cpp"
     }
 }

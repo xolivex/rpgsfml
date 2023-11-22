@@ -1,7 +1,10 @@
 #ifndef GAME_STATE_H
 #define GAME_STATE_H
+
 #include "State.h"
 #include "../GUI/PauseMenu.h"
+#include "../Tile/TileMap.h"
+
 class GameState : public State
 {
 private:
@@ -9,6 +12,8 @@ private:
     Player * player;
     PausedMenu * pmenu;
     sf::Font font;
+    TileMap map;
+
     //Functions
     void initKeybinds();
     void initTextures();
