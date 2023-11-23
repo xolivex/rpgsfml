@@ -4,8 +4,8 @@ TileMap::TileMap()
 {
     this->gridSizeF = 50.f;
     this->gridSizeU = static_cast<unsigned>(gridSizeF);
-    this->maxSize.x = 1000;
-    this->maxSize.y = 1000;
+    this->maxSize.x = 10;
+    this->maxSize.y = 10;
 
     this->layers = 1;
     this->map.resize(this->maxSize.x);

@@ -3,6 +3,7 @@
 
 #include "../includes.h"
 #include "../entities/Player.h"
+#include "../ResourceFiles/GraphicsSettings.h"
 
 class State{
 private:

@@ -64,7 +64,16 @@ void EditorState::initButtons()
         sf::Color(70,70,70,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
         sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
 }
-//MAINMENU
+void EditorState::initPausedMenu()
+{
+    this->pmenu = new PausedMenu(*this->window, this->font);
+    this->pmenu->addButton("QUIT", 800.f, "quit");
+}
+void EditorState::initMap()
+{ 
+    
+}
+// MAINMENU
 EditorState::EditorState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State*> * states)
     : State(window, supportedKeys, states)
 {
@@ -73,12 +82,14 @@ EditorState::EditorState(sf::RenderWindow *window, std::map<std::string, int> *s
     this->initKeybinds();
     this->initFonts();
     this->initButtons();
+    this->initPausedMenu();
 
     
 }
 
 EditorState::~EditorState()
 {
+    delete pmenu;
     auto it = this->buttons.begin();
     for(it = this->buttons.begin();it != this->buttons.end(); ++it)
     {
@@ -89,9 +100,16 @@ EditorState::~EditorState()
 
 void EditorState::updateInput(const float &dt)
 {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("CLOSE"))))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("CLOSE"))) && this->getKeytime())
     {
-        this->endState();
+        if(!this->paused)
+        {
+            this->pausedState();
+        }
+        else
+        {
+            this->unpausedState();
+        }
     }
 }
    
@@ -107,10 +125,22 @@ void EditorState::updateButtons()
 
 void EditorState::update(const float & dt)
 {
+    this->updateKeytime(dt);
     this->updateMousePositions();
     this->updateInput(dt);
-    this->updateButtons();
+    //this->updateButtons();
+    if(!this->paused)
+    {
 
+    }
+    else
+    {
+        this->pmenu->update(this->mousePosView);
+        if(this->pmenu->isPressed("QUIT"))
+        {
+            this->endState();
+        }
+    }
 
     
 
@@ -132,7 +162,15 @@ void EditorState::render(sf::RenderTarget * target)
         target = this->window;
     }
 
-    this->renderButtons(*target);
+    this->map.render(*target);
+
+    if(this->paused)
+    {   
+        this->pmenu->render(*target);
+    }
+
+
+    //this->renderButtons(*target);
 
     //REMOVE LATER!!!
     /*sf::Text mouseText;
