@@ -48,14 +48,15 @@ void GameState::initFonts()
 }
 
 //Constructors and Destructors
-GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states)
-    : State(window, supportedKeys, states)
+GameState::GameState(StateData * state_data)
+    : State(state_data)
 {
+    
     this->initKeybinds();
     this->initTextures();
     this->initPlayers();
     this->initFonts();
-    this->initPausedMenu();  
+    this->initPausedMenu(); 
 }
 GameState::~GameState()
 {

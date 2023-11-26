@@ -6,6 +6,12 @@
 #include "../Tile/TileMap.h"
 #include "../GUI/PauseMenu.h"
 
+class State;
+class Gui;
+class TileMap;
+class PauseMenu;
+
+
 class EditorState  : public State
 {
 private:
@@ -28,7 +34,7 @@ private:
     void initPausedMenu();
     void initMap();
 public:
-    EditorState(sf::RenderWindow * window, std::map<std::string, int>* supportedKeys, std::stack<State*> * states);
+    EditorState(StateData * state_data);
     virtual ~EditorState();
 
     //functions

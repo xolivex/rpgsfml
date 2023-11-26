@@ -11,6 +11,7 @@ class Game
 {
 private:
     GraphicsSettings gfxSettings;
+    StateData stateData;
     sf::RenderWindow *window;
     sf::Event event;
 
@@ -20,10 +21,13 @@ private:
     std::stack<State *> states;
     std::map<std::string, int> supportedKeys;
 
+    float gridSize;
+
     // fucntions
     void initVariables();
     void initGraphicsSettings();
     void initGameWindow();
+    void initStateData();
     void initStates();
     void initKeys();
 
