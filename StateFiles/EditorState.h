@@ -21,9 +21,11 @@ private:
     sf::Font font;
     PausedMenu * pmenu;
 
-    TileMap map;
+    TileMap * tileMap;
     
     std::map<std::string, gui::Button*> buttons;
+
+    sf::RectangleShape selectorRect;
 
     //Functions
     void initVariables();
@@ -32,15 +34,18 @@ private:
     void initFonts();
     void initButtons();
     void initPausedMenu();
-    void initMap();
+    void initTileMap();
+    void initGui();
 public:
     EditorState(StateData * state_data);
     virtual ~EditorState();
 
     //functions
     void updateInput(const float & dt);
+    void updateGui();
     void updateButtons();
     void update(const float& dt);
+    void renderGui(sf::RenderTarget& target);
     void renderButtons(sf::RenderTarget& target);
     void render(sf::RenderTarget * target = NULL);
 };

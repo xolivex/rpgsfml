@@ -13,12 +13,15 @@ private:
     std::vector< std::vector< std::vector< Tile > > > map;
 
 public:
-    TileMap(/* args */);
+    TileMap(float grid_SizeF, float width, float height);
     virtual ~TileMap();
 
     //Functions
     void update();
     void render(sf::RenderTarget & target);
+
+    void addTile();
+    void removeTile();
     
 };
 

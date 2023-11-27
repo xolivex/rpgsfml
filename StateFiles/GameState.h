@@ -12,7 +12,7 @@ private:
     Player * player;
     PausedMenu * pmenu;
     sf::Font font;
-    TileMap map;
+    TileMap * tileMap;
 
     //Functions
     void initKeybinds();
@@ -20,14 +20,17 @@ private:
     void initPlayers();
     void initPausedMenu();
     void initFonts();
+    void initTileMap();
 public:
     GameState(StateData * state_data);
     virtual ~GameState();
 
     //functions
+    void updateTileMap();
     void updateInput(const float& dt);
     void updatePlayerInput(const float & dt);
     void update(const float& dt);
+    void renderTileMap(sf::RenderTarget & target);
     void render(sf::RenderTarget * target = nullptr);
 };
 

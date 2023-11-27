@@ -69,14 +69,23 @@ void EditorState::initPausedMenu()
     this->pmenu = new PausedMenu(*this->window, this->font);
     this->pmenu->addButton("QUIT", 800.f, "quit");
 }
-void EditorState::initMap()
+void EditorState::initTileMap()
 { 
-    
+    tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+}
+void EditorState::initGui()
+{
+    this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
+    this->selectorRect.setFillColor(sf::Color::Transparent);
+    this->selectorRect.setOutlineThickness(1.f);
+    this->selectorRect.setOutlineColor(sf::Color::Blue);
 }
 // MAINMENU
 EditorState::EditorState(StateData * state_data)
     : State(state_data)
 {
+    this->initGui();
+    this->initTileMap();
     this->initVariables();
     this->initBackground();
     this->initKeybinds();
@@ -89,12 +98,15 @@ EditorState::EditorState(StateData * state_data)
 
 EditorState::~EditorState()
 {
-    delete pmenu;
     auto it = this->buttons.begin();
     for(it = this->buttons.begin();it != this->buttons.end(); ++it)
     {
         delete it->second;
     }
+
+    delete pmenu;
+    
+    delete tileMap;
 }
 
 
@@ -112,8 +124,11 @@ void EditorState::updateInput(const float &dt)
         }
     }
 }
-   
 
+void EditorState::updateGui()
+{
+    this->selectorRect.setPosition(this->mousePosView);
+}
 
 void EditorState::updateButtons()
 {
@@ -131,7 +146,7 @@ void EditorState::update(const float & dt)
     //this->updateButtons();
     if(!this->paused)
     {
-
+        this->updateGui();
     }
     else
     {
@@ -145,6 +160,11 @@ void EditorState::update(const float & dt)
     
 
     
+}
+
+void EditorState::renderGui(sf::RenderTarget &target)
+{
+    target.draw(selectorRect);
 }
 
 void EditorState::renderButtons(sf::RenderTarget& target)
@@ -162,7 +182,8 @@ void EditorState::render(sf::RenderTarget * target)
         target = this->window;
     }
 
-    this->map.render(*target);
+    //map
+    this->renderGui(*target);
 
     if(this->paused)
     {   
