@@ -6,6 +6,7 @@
 //inicializer functions
 void EditorState::initVariables()
 {
+    this->paused = false;
 }
 
 void EditorState::initBackground()
@@ -71,7 +72,7 @@ void EditorState::initPausedMenu()
 }
 void EditorState::initTileMap()
 { 
-    tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+    tileMap = new TileMap(this->stateData->gridSize, 100, 100);
 }
 void EditorState::initGui()
 {
@@ -127,7 +128,7 @@ void EditorState::updateInput(const float &dt)
 
 void EditorState::updateGui()
 {
-    this->selectorRect.setPosition(this->mousePosView);
+    this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize, this->mousePosGrid.y * this->stateData->gridSize);
 }
 
 void EditorState::updateButtons()
