@@ -7,6 +7,7 @@
 void EditorState::initVariables()
 {
     this->paused = false;
+    this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
 }
 
 void EditorState::initBackground()
@@ -61,7 +62,7 @@ void EditorState::initGui()
     this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
     this->selectorRect.setFillColor(sf::Color::Transparent);
     this->selectorRect.setOutlineThickness(1.f);
-    this->selectorRect.setOutlineColor(sf::Color::Blue);
+    this->selectorRect.setOutlineColor(sf::Color::White);
 }
 // MAINMENU
 EditorState::EditorState(StateData * state_data)
@@ -96,7 +97,21 @@ void EditorState::updateEditorInput(const float &dt)
 {
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
     {
-        this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+        this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+    }else if(sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
+    {
+        this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->getKeytime())
+    {
+        if(this->textureRect.left >= 50)
+        {
+            this->textureRect.left = 0;
+        }else
+        {
+            this->textureRect.left += 50;
+        }
     }
 }
 

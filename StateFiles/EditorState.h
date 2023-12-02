@@ -25,6 +25,7 @@ private:
     
     std::map<std::string, gui::Button*> buttons;
 
+    sf::IntRect textureRect;
     sf::RectangleShape selectorRect;
 
     //Functions

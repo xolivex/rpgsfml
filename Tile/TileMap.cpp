@@ -20,6 +20,9 @@ TileMap::TileMap(float grid_SizeF, float width, float height)
             }
         }
     }
+
+    if(!this->tileTextureSheet.loadFromFile("Resources/image/tile/tilesheet1.png"))
+        std::cout << "ERROR::TILEMAP::NOT_LOAD::TEXTURE_TILE"<< "\n";
 }
 
 TileMap::~TileMap()
@@ -58,7 +61,7 @@ void TileMap::render(sf::RenderTarget &target)
     }
 }
 
-void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z)
+void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& textureRect)
 {
     /**/
     if(x < this->maxSize.x && x >= 0
@@ -67,12 +70,23 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z)
     {
         if(this->map[x][y][z] == NULL)
         {
-            this->map[x][y][z] = new Tile(x * this->gridSizeF, y * this->gridSizeF, this->gridSizeF);
+            this->map[x][y][z] = new Tile(x * this->gridSizeF, y * this->gridSizeF, this->gridSizeF, this->tileTextureSheet, textureRect);
             std::cout << "DEBUG: ADD 1 ONLY TIME!!" << "\n";
         }
     }
 }
 
-void TileMap::removeTile()
+void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
 {
+    if(x < this->maxSize.x && x >= 0
+     && y < this->maxSize.y && y >= 0
+     && z < this->layers && z >= 0)
+    {
+        if(this->map[x][y][z] != NULL)
+        {
+            delete this->map[x][y][z];
+            this->map[x][y][z] = NULL;
+            std::cout << "DEBUG: REMOVE 1 ONLY TIME!!" << "\n";
+        }
+    }
 }

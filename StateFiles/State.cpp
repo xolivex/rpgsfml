@@ -65,5 +65,4 @@ void State::updateMousePositions()
         /*static_cast<unsigned>(*/this->mousePosView.x/*)*/ / /*static_cast<unsigned>(*/this->gridSize/*)*/,
         /*static_cast<unsigned>(*/this->mousePosView.y/*)*/ / /*static_cast<unsigned>(*/this->gridSize/*)*/
     );
-    std::cout << this->mousePosGrid.x << " . " << this->mousePosGrid.y <<"\n";
 }
