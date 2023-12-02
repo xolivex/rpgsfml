@@ -20,7 +20,7 @@ public:
     void update();
     void render(sf::RenderTarget & target);
 
-    void addTile();
+    void addTile(const unsigned x, const unsigned y, const unsigned z);
     void removeTile();
     
 };

@@ -41,6 +41,7 @@ public:
     virtual ~EditorState();
 
     //functions
+    void updateEditorInput(const float & dt);
     void updateInput(const float & dt);
     void updateGui();
     void updateButtons();

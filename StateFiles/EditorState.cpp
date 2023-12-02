@@ -45,25 +45,7 @@ void EditorState::initFonts()
 
 void EditorState::initButtons()
 {
-    this->buttons["GAME_STATE"] = new gui::Button(100, 100, 150, 50, &this->font,
-         "New Game", 30,
-        sf::Color(70,70,70,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
-        sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
-
-    this->buttons["SETTINGS"] = new gui::Button(100, 150, 150, 50, &this->font,
-         "settings", 30,
-        sf::Color(70,70,70,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
-        sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
-
-    this->buttons["EDITOR_STATE"] = new gui::Button(100, 200, 150, 50, &this->font,
-         "Editor", 30,
-        sf::Color(70,70,70,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
-        sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
-
-    this->buttons["EXIT"] = new gui::Button(100, 350, 150, 50, &this->font,
-         "Quit", 30,
-        sf::Color(70,70,70,200), sf::Color(250,250,250,250), sf::Color(20,20,20,50),
-        sf::Color(70,70,70,0), sf::Color(150,150,150,0), sf::Color(20,20,20,0));
+    
 }
 void EditorState::initPausedMenu()
 {
@@ -72,7 +54,7 @@ void EditorState::initPausedMenu()
 }
 void EditorState::initTileMap()
 { 
-    tileMap = new TileMap(this->stateData->gridSize, 100, 100);
+    tileMap = new TileMap(this->stateData->gridSize, 10, 10);
 }
 void EditorState::initGui()
 {
@@ -110,6 +92,13 @@ EditorState::~EditorState()
     delete tileMap;
 }
 
+void EditorState::updateEditorInput(const float &dt)
+{
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
+    {
+        this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+    }
+}
 
 void EditorState::updateInput(const float &dt)
 {
@@ -145,11 +134,12 @@ void EditorState::update(const float & dt)
     this->updateMousePositions();
     this->updateInput(dt);
     //this->updateButtons();
-    if(!this->paused)
+    if(!this->paused) //unpaused
     {
         this->updateGui();
+        this->updateEditorInput(dt);
     }
-    else
+    else //paused
     {
         this->pmenu->update(this->mousePosView);
         if(this->pmenu->isPressed("QUIT"))
@@ -184,6 +174,7 @@ void EditorState::render(sf::RenderTarget * target)
     }
 
     //map
+    this->tileMap->render(*target);
     this->renderGui(*target);
 
     if(this->paused)
