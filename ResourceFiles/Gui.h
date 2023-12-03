@@ -81,18 +81,24 @@ class TextureSelector
 {
 private:
     bool active;
+    bool hidden;
     float gridSize;
+    float offset;
     sf::RectangleShape selector;
-    sf::IntRect textureRect;
     sf::Vector2i mousePosGrid;
     sf::RectangleShape bounds;
     sf::Sprite sheet;
+    sf::IntRect textureRect;
+    gui::Button * hidden_btn;
 public:
-    TextureSelector(float x, float y, float width, float height, float gridSize,const sf::Texture* texture_sheet);
+    TextureSelector(float x, float y,
+     float width, float height, 
+     float gridSize, const sf::Texture* texture_sheet, sf::Font & font, std::string text);
     ~TextureSelector();
 
     //Accessors
     const bool & getActive() const;
+    const sf::IntRect& getTextureRect() const;
 
     //Functions
     void update(const sf::Vector2i& mousePosWindow);
