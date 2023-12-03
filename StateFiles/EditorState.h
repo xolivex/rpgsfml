@@ -19,6 +19,8 @@ private:
     sf::Texture backgroundTexture;
     sf::RectangleShape background;
     sf::Font font;
+    sf::Text cursorText;
+    std::stringstream ss;
     PausedMenu * pmenu;
 
     TileMap * tileMap;
@@ -27,12 +29,14 @@ private:
 
     sf::IntRect textureRect;
     sf::RectangleShape selectorRect;
+    gui::TextureSelector * textureSelector;
 
-    //Functions
+    //init Functions
     void initVariables();
     void initBackground();
     void initKeybinds();
     void initFonts();
+    void initText();
     void initButtons();
     void initPausedMenu();
     void initTileMap();

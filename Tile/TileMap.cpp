@@ -42,6 +42,11 @@ TileMap::~TileMap()
 
 //Functions
 
+const sf::Texture*  TileMap::getTileSheet() const
+{
+    return &this->tileTextureSheet;
+}
+
 void TileMap::update()
 {
 }

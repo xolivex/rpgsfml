@@ -17,6 +17,10 @@ public:
     TileMap(float grid_SizeF, float width, float height);
     virtual ~TileMap();
 
+
+    //Accessors
+    const sf::Texture* getTileSheet() const;
+
     //Functions
     void update();
     void render(sf::RenderTarget & target);
