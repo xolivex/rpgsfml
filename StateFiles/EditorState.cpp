@@ -74,7 +74,7 @@ void EditorState::initGui()
     this->selectorRect.setTexture(this->tileMap->getTileSheet());
     this->selectorRect.setTextureRect(this->textureRect);
 
-    this->textureSelector = new gui::TextureSelector(10.f, 10.f, 500.f, 500.f, this->tileMap->getTileSheet());
+    this->textureSelector = new gui::TextureSelector(10.f, 10.f, 500.f, 500.f, this->stateData->gridSize,this->tileMap->getTileSheet());
     
 }
 // MAINMENU
@@ -103,8 +103,8 @@ EditorState::~EditorState()
     }
 
     delete pmenu;
-    
     delete tileMap;
+    delete this->textureSelector;
 }
 
 //Functions
@@ -155,6 +155,7 @@ void EditorState::updateGui()
              << this->mousePosGrid.x << " " << this->mousePosGrid.y;
     this->cursorText.setString(ss.str());
     this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize, this->mousePosGrid.y * this->stateData->gridSize);
+    this->textureSelector->update(this->mousePosWindow);
 }
 
 void EditorState::updateButtons()

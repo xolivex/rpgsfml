@@ -80,14 +80,22 @@ public:
 class TextureSelector
 {
 private:
+    bool active;
+    float gridSize;
+    sf::RectangleShape selector;
+    sf::IntRect textureRect;
+    sf::Vector2i mousePosGrid;
     sf::RectangleShape bounds;
     sf::Sprite sheet;
 public:
-    TextureSelector(float x, float y, float width, float height, const sf::Texture* texture_sheet);
+    TextureSelector(float x, float y, float width, float height, float gridSize,const sf::Texture* texture_sheet);
     ~TextureSelector();
 
+    //Accessors
+    const bool & getActive() const;
+
     //Functions
-    void update();
+    void update(const sf::Vector2i& mousePosWindow);
     void render(sf::RenderTarget & target);
 };
 }
