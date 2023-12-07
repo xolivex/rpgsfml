@@ -29,6 +29,7 @@ private:
 
     sf::IntRect textureRect;
     sf::RectangleShape selectorRect;
+    sf::RectangleShape sidebar;
     gui::TextureSelector * textureSelector;
 
     //init Functions
@@ -48,7 +49,7 @@ public:
     //functions
     void updateEditorInput(const float & dt);
     void updateInput(const float & dt);
-    void updateGui();
+    void updateGui(const float &dt);
     void updateButtons();
     void update(const float& dt);
     void renderGui(sf::RenderTarget& target);

@@ -84,6 +84,8 @@ private:
     bool hidden;
     float gridSize;
     float offset;
+    float keytime;
+    const float keytimeMax;
     sf::RectangleShape selector;
     sf::Vector2i mousePosGrid;
     sf::RectangleShape bounds;
@@ -99,9 +101,11 @@ public:
     //Accessors
     const bool & getActive() const;
     const sf::IntRect& getTextureRect() const;
+    const bool getkeyTime();
 
     //Functions
-    void update(const sf::Vector2i& mousePosWindow);
+    void updatekeyTime(const float& dt);
+    void update(const sf::Vector2i& mousePosWindow, const float &dt);
     void render(sf::RenderTarget & target);
 };
 }

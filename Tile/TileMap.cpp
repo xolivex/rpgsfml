@@ -95,3 +95,11 @@ void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
         }
     }
 }
+
+void TileMap::loadFromFile(const std::string file_name)
+{
+}
+
+void TileMap::saveToFile(const std::string file_name)
+{
+}

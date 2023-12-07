@@ -235,6 +235,7 @@ void gui::DropDownList::render(sf::RenderTarget &target)
 
 gui::TextureSelector::TextureSelector(float x, float y, 
 float width, float height, float gridSize,const sf::Texture *texture_sheet, sf::Font & font, std::string text)
+: keytime(0.f), keytimeMax(2.f)
 { 
     this->offset = 60.f;
     this->hidden = false;
@@ -290,10 +291,27 @@ const sf::IntRect &gui::TextureSelector::getTextureRect() const
     return this->textureRect;
 }
 
-//Functions
-void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow)
+const bool gui::TextureSelector::getkeyTime()
 {
-    if(this->hidden_btn->isPressed())
+    if(this->keytime >= this->keytimeMax)
+    {
+        this->keytime = 0.f;
+        return true;
+    }
+    return false;
+}
+
+void gui::TextureSelector::updatekeyTime(const float &dt)
+{
+    if(this->keytime < this->keytimeMax)
+        this->keytime += 10.f * dt;
+}
+
+// Functions
+void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const float &dt)
+{
+    this->updatekeyTime(dt);
+    if(this->hidden_btn->isPressed() && this->getkeyTime())
     {
         if(this->hidden)
             this->hidden = false;
@@ -321,9 +339,10 @@ void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow)
                 this->bounds.getPosition().x + this->mousePosGrid.x * this->gridSize,
                 this->bounds.getPosition().y + this->mousePosGrid.y * this->gridSize));
             // update textureRect for selector texture
+            
+                this->textureRect.left = static_cast<int>(this->selector.getPosition().x - this->bounds.getPosition().x);
+                this->textureRect.top = static_cast<int>(this->selector.getPosition().y - this->bounds.getPosition().y);
 
-            this->textureRect.left = static_cast<int>(this->selector.getPosition().x - this->bounds.getPosition().x);
-            this->textureRect.top = static_cast<int>(this->selector.getPosition().y - this->bounds.getPosition().y);
         }
     }
 }

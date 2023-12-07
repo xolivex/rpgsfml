@@ -27,7 +27,9 @@ public:
 
     void addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& textureRect);
     void removeTile(const unsigned x, const unsigned y, const unsigned z);
-    
+
+    void saveToFile(const std::string file_name);
+    void loadFromFile(const std::string file_name);
 };
 
 #endif //TILEMAP_H

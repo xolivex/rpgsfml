@@ -67,6 +67,11 @@ void EditorState::initTileMap()
 }
 void EditorState::initGui()
 {
+    this->sidebar.setSize(sf::Vector2f(60.f, static_cast<float>(this->stateData->gfxSettings->resolution.height)));
+    this->sidebar.setFillColor(sf::Color(50, 50, 50, 100));
+    this->sidebar.setOutlineThickness(1.f);
+    this->sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
+
     this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
     this->selectorRect.setFillColor(sf::Color(255,255,255,150));
     this->selectorRect.setOutlineThickness(1.f);
@@ -111,22 +116,26 @@ EditorState::~EditorState()
 //Functions
 void EditorState::updateEditorInput(const float &dt)
 {
-    if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
+    if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
     {
-        if(!this->textureSelector->getActive())
-        {
-            this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
-        }
-        else
-        {
-            this->textureRect = this->textureSelector->getTextureRect();
-        }
-    }else if(sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
-    {
-        if(!this->textureSelector->getActive())
-            this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
-    }
 
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
+        {
+            if (!this->textureSelector->getActive())
+            {
+                this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+            }
+            else
+            {
+                this->textureRect = this->textureSelector->getTextureRect();
+            }
+        }
+        else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
+        {
+            if (!this->textureSelector->getActive())
+                this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+        }
+    }
 }
 
 void EditorState::updateInput(const float &dt)
@@ -144,9 +153,9 @@ void EditorState::updateInput(const float &dt)
     }
 }
 
-void EditorState::updateGui()
+void EditorState::updateGui(const float &dt)
 {
-    this->textureSelector->update(this->mousePosWindow);
+    this->textureSelector->update(this->mousePosWindow, dt);
     if(!this->textureSelector->getActive())
     {
         this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize, this->mousePosGrid.y * this->stateData->gridSize);
@@ -177,7 +186,7 @@ void EditorState::update(const float & dt)
     //this->updateButtons();
     if(!this->paused) //unpaused
     {
-        this->updateGui();
+        this->updateGui(dt);
         this->updateEditorInput(dt);
     }
     else //paused
@@ -201,6 +210,8 @@ void EditorState::renderGui(sf::RenderTarget &target)
 
     this->textureSelector->render(target);
     target.draw(this->cursorText);
+
+    target.draw(this->sidebar);
     
 }
 
