@@ -59,11 +59,12 @@ void EditorState::initButtons()
 void EditorState::initPausedMenu()
 {
     this->pmenu = new PausedMenu(*this->window, this->font);
-    this->pmenu->addButton("QUIT", 800.f, "quit");
+    this->pmenu->addButton("SAVE", 700.f, "Save");
+    this->pmenu->addButton("QUIT", 800.f, "Quit");
 }
 void EditorState::initTileMap()
 { 
-    tileMap = new TileMap(this->stateData->gridSize, 100, 100);
+    tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/image/tile/tilesheet1.png");
 }
 void EditorState::initGui()
 {
@@ -192,6 +193,10 @@ void EditorState::update(const float & dt)
     else //paused
     {
         this->pmenu->update(this->mousePosView);
+        if(this->pmenu->isPressed("SAVE"))
+        {
+            this->tileMap->saveToFile("text.slmp");
+        }
         if(this->pmenu->isPressed("QUIT"))
         {
             this->endState();
