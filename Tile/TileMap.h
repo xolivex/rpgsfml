@@ -14,6 +14,7 @@ private:
     std::vector< std::vector< std::vector< Tile *> > > map;
     sf::Texture tileTextureSheet;
 
+    void clear();
 public:
     TileMap(float grid_SizeF, float width, float height, std::string texture_file);
     virtual ~TileMap();

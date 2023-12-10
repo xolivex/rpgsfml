@@ -59,8 +59,9 @@ void EditorState::initButtons()
 void EditorState::initPausedMenu()
 {
     this->pmenu = new PausedMenu(*this->window, this->font);
-    this->pmenu->addButton("SAVE", 700.f, "Save");
     this->pmenu->addButton("QUIT", 800.f, "Quit");
+    this->pmenu->addButton("SAVE", 500.f, "Save");
+    this->pmenu->addButton("LOAD", 400.f, "Load");
 }
 void EditorState::initTileMap()
 { 
@@ -194,13 +195,14 @@ void EditorState::update(const float & dt)
     {
         this->pmenu->update(this->mousePosView);
         if(this->pmenu->isPressed("SAVE"))
-        {
             this->tileMap->saveToFile("text.slmp");
-        }
+        
         if(this->pmenu->isPressed("QUIT"))
-        {
             this->endState();
-        }
+        
+        if(this->pmenu->isPressed("LOAD"))
+            this->tileMap->loadFromFile("text.slmp");
+        
     }
 
     

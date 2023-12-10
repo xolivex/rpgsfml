@@ -15,7 +15,7 @@ protected:
     short type;
 public:
     Tile();
-    Tile(float x, float y, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect,
+    Tile(unsigned grid_x, unsigned grid_y, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect,
     bool collision = false, short type = Typetile::DEFAULT);
     virtual ~Tile();
     //Accessors
