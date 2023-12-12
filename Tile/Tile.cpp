@@ -13,8 +13,8 @@ bool collision, short type)
     this->shape.setPosition(static_cast<float>(grid_x) * gridSizeF,static_cast<float>(grid_y) * gridSizeF);
     this->shape.setTexture(&texture);
     this->shape.setTextureRect(textureRect);
-    this->collision = false;
-    this->type = 0;
+    this->collision = collision;
+    this->type = type;
 }
 
 Tile::~Tile()

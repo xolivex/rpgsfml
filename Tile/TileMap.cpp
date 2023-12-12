@@ -77,7 +77,8 @@ void TileMap::render(sf::RenderTarget &target)
     }
 }
 
-void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& textureRect)
+void TileMap::addTile(const unsigned x, const unsigned y, 
+const unsigned z, const sf::IntRect& textureRect, const bool collision, const short type)
 {
     /**/
     if(x < this->maxSize.x && x >= 0
@@ -86,7 +87,7 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, cons
     {
         if(this->map[x][y][z] == NULL)
         {
-            this->map[x][y][z] = new Tile(x , y, this->gridSizeF, this->tileTextureSheet, textureRect);
+            this->map[x][y][z] = new Tile(x , y, this->gridSizeF, this->tileTextureSheet, textureRect, collision, type);
             std::cout << "DEBUG: ADD 1 ONLY TIME!!" << "\n";
         }
     }

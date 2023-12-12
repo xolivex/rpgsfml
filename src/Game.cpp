@@ -79,7 +79,6 @@ void Game::initKeys()
         {
             this->supportedKeys[key] = keyvalue;
         }
-        std::cout << "saiu" << std::endl;
     }
 
     ifs.close();

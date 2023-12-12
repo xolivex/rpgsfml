@@ -32,6 +32,9 @@ private:
     sf::RectangleShape sidebar;
     gui::TextureSelector * textureSelector;
 
+    bool collision = false;
+    short type = Typetile::DEFAULT;
+
     //init Functions
     void initVariables();
     void initBackground();

@@ -54,7 +54,7 @@ void EditorState::initText()
 
 void EditorState::initButtons()
 {
-    
+
 }
 void EditorState::initPausedMenu()
 {
@@ -125,7 +125,7 @@ void EditorState::updateEditorInput(const float &dt)
         {
             if (!this->textureSelector->getActive())
             {
-                this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+                this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect, this->collision, this->type);
             }
             else
             {
@@ -137,6 +137,27 @@ void EditorState::updateEditorInput(const float &dt)
             if (!this->textureSelector->getActive())
                 this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
         }
+    }
+
+    //keys for collision and type tile
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("TOGGLE_COLLISION"))) && this->getKeytime())
+    {
+        if(this->collision)
+            this->collision = false;
+        else
+            this->collision = true;
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("INCREASE_TYPE"))) && this->getKeytime())
+    {
+        ++this->type;
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("DECREASE_TYPE"))) && this->getKeytime())
+    {
+        if(this->type > 0)
+            --this->type;
     }
 }
 
@@ -168,7 +189,9 @@ void EditorState::updateGui(const float &dt)
     this->ss.str("");
     this->ss << this->mousePosView.x << " " << this->mousePosView.y<< "\n"
              << this->textureRect.left << " " << this->textureRect.top << "\n"
-             << this->mousePosGrid.x << " " << this->mousePosGrid.y;
+             << this->mousePosGrid.x << " " << this->mousePosGrid.y
+             << "\n" << "collision: " << this->collision
+             << "\n" << "type: " << this->type;
     this->cursorText.setString(ss.str());
 }
 
@@ -194,14 +217,16 @@ void EditorState::update(const float & dt)
     else //paused
     {
         this->pmenu->update(this->mousePosView);
+
+        if(this->pmenu->isPressed("LOAD"))
+            this->tileMap->loadFromFile("text.slmp");
+
         if(this->pmenu->isPressed("SAVE"))
             this->tileMap->saveToFile("text.slmp");
         
         if(this->pmenu->isPressed("QUIT"))
             this->endState();
         
-        if(this->pmenu->isPressed("LOAD"))
-            this->tileMap->loadFromFile("text.slmp");
         
     }
 
