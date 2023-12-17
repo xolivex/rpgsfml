@@ -46,7 +46,7 @@ public:
     void setText(const std::string text);
     void setId(unsigned short id);
     //Functions
-    void update(const sf::Vector2f& mousePos);
+    void update(const sf::Vector2i& mousePosWindow);
     void render(sf::RenderTarget& target);
     
 };
@@ -73,7 +73,7 @@ public:
     const bool getkeyTime();
 
     void updatekeyTime(const float& dt);
-    void update(const sf::Vector2f& mousePos, const float& dt);
+    void update(const sf::Vector2i& mousePosWindow, const float& dt);
     void render(sf::RenderTarget& target);
 };
 

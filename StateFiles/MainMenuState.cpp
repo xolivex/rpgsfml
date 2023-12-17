@@ -103,7 +103,7 @@ void MainMenuState::updateButtons()
 {
     for(auto &it : this->buttons)
     {
-        it.second->update(this->mousePosView);
+        it.second->update(this->mousePosWindow);
     }
 
     //GAME
@@ -152,6 +152,7 @@ void MainMenuState::render(sf::RenderTarget * target)
     {
         target = this->window;
     }
+    target->setView(this->window->getDefaultView());
     target->draw(background);
     this->renderButtons(*target);
 

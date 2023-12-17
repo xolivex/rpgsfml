@@ -46,7 +46,7 @@ gui::Button::~Button()
 }
 
 
-void gui::Button::update(const sf::Vector2f &mousePos)
+void gui::Button::update(const sf::Vector2i &mousePosWindow)
 {
     /*Update the booleans for hover and pressed*/
 
@@ -54,7 +54,7 @@ void gui::Button::update(const sf::Vector2f &mousePos)
     this->buttonState = BTN_IDLE;
 
     //hover
-    if(this->shape.getGlobalBounds().contains(mousePos))
+    if(this->shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
     {
         this->buttonState = BTN_HOVER;
 
@@ -186,10 +186,10 @@ void gui::DropDownList::updatekeyTime(const float &dt)
         this->keytime += 10.f * dt;
 }
 
-void gui::DropDownList::update(const sf::Vector2f &mousePos, const float& dt)
+void gui::DropDownList::update(const sf::Vector2i &mousePosWindow, const float& dt)
 {
     this->updatekeyTime(dt);
-    this->activeElement->update(mousePos);
+    this->activeElement->update(mousePosWindow);
     //show and hide the list
     if(this->activeElement->isPressed() && this->getkeyTime())
     {
@@ -207,7 +207,7 @@ void gui::DropDownList::update(const sf::Vector2f &mousePos, const float& dt)
     {
         for(auto &i : this->list)
         {
-            i->update(mousePos);
+            i->update(mousePosWindow);
             if(i->isPressed() && this->getkeyTime())
             {
                 this->activeElement->setText(i->getText());
@@ -318,7 +318,7 @@ void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const floa
         else
             this->hidden = true;
     }
-    this->hidden_btn->update(static_cast<sf::Vector2f>(mousePosWindow));
+    this->hidden_btn->update(mousePosWindow);
     if(!this->hidden)
     {
         if (this->bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))

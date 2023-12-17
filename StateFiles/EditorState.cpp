@@ -1,13 +1,19 @@
 #include "EditorState.h"
 
+void EditorState::initView()
+{
+    this->view.setSize(sf::Vector2f(this->stateData->gfxSettings->resolution.width,
+                                    this->stateData->gfxSettings->resolution.height));
+    this->view.setCenter(this->stateData->gfxSettings->resolution.width / 2.f,
+                         this->stateData->gfxSettings->resolution.height / 2.f);
+}
 
-
-
-//inicializer functions
+// inicializer functions
 void EditorState::initVariables()
 {
     this->paused = false;
     this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
+    this->viewspeed = 100.f;
 }
 
 void EditorState::initBackground()
@@ -89,6 +95,7 @@ void EditorState::initGui()
 EditorState::EditorState(StateData * state_data)
     : State(state_data)
 {
+    this->initView();
     this->initTileMap();
     this->initVariables();
     this->initBackground();
@@ -118,6 +125,21 @@ EditorState::~EditorState()
 //Functions
 void EditorState::updateEditorInput(const float &dt)
 {
+    //MOVE VIEW
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_VIEW_UP"))))
+    {
+        this->view.move(0.f, -this->viewspeed * dt);
+    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_VIEW_DOWN"))))
+    {
+        this->view.move(0.f, this->viewspeed * dt);
+    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_VIEW_LEFT"))))
+    {
+        this->view.move(-this->viewspeed * dt, 0.f);
+    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_VIEW_RIGHT"))))
+    {
+        this->view.move(this->viewspeed * dt, 0.f);
+    }
+
     if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
     {
 
@@ -199,14 +221,14 @@ void EditorState::updateButtons()
 {
     for(auto &it : this->buttons)
     {
-        it.second->update(this->mousePosView);
+        it.second->update(this->mousePosWindow);
     }
 }
 
 void EditorState::update(const float & dt)
 {
     this->updateKeytime(dt);
-    this->updateMousePositions();
+    this->updateMousePositions(&this->view);
     this->updateInput(dt);
     //this->updateButtons();
     if(!this->paused) //unpaused
@@ -216,7 +238,7 @@ void EditorState::update(const float & dt)
     }
     else //paused
     {
-        this->pmenu->update(this->mousePosView);
+        this->pmenu->update(this->mousePosWindow);
 
         if(this->pmenu->isPressed("LOAD"))
             this->tileMap->loadFromFile("text.slmp");
@@ -263,7 +285,10 @@ void EditorState::render(sf::RenderTarget * target)
     }
 
     //map
+    target->setView(this->view);
     this->tileMap->render(*target);
+
+    target->setView(this->window->getDefaultView());
     this->renderGui(*target);
 
     if(this->paused)

@@ -129,7 +129,7 @@ void GameState::update(const float & dt)
     }
     else
     {
-        this->pmenu->update(this->mousePosView);
+        this->pmenu->update(this->mousePosWindow);
         if(this->pmenu->isPressed("QUIT"))
         {
             this->endState();
@@ -153,6 +153,7 @@ void GameState::render(sf::RenderTarget * target)
     this->renderTileMap(*target);
 
     this->player->render(*target);
+    target->setView(this->window->getDefaultView());
     if(this->paused)
     {
         pmenu->render(*target);

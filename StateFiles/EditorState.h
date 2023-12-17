@@ -16,6 +16,7 @@ class EditorState  : public State
 {
 private:
     //Variables
+    sf::View view;
     sf::Texture backgroundTexture;
     sf::RectangleShape background;
     sf::Font font;
@@ -34,8 +35,10 @@ private:
 
     bool collision = false;
     short type = Typetile::DEFAULT;
+    float viewspeed;
 
     //init Functions
+    void initView();
     void initVariables();
     void initBackground();
     void initKeybinds();

@@ -55,8 +55,10 @@ void State::updateKeytime(const float& dt)
     }
 }
 
-void State::updateMousePositions()
+void State::updateMousePositions(sf::View * view)
 {
+    if(view)
+        this->window->setView(*view);
     this->mousePosScreen = sf::Mouse::getPosition();
     this->mousePosWindow = sf::Mouse::getPosition(*this->window);
     this->mousePosView = this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window));
