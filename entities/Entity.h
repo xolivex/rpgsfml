@@ -25,12 +25,13 @@ public:
     void createHitboxComponent(sf::Sprite& sprite, 
         float offset_x, float offset_y,
         float width, float height);
+    //Accessors
+    const sf::Vector2f& getPosition() const;
+    //Modiffiers
+    virtual void setPosition(const float x, const float y);
 
     //functions
-
-    virtual void setPosition(const float x, const float y);
     virtual void move(const float dir_x, const float dir_y, const float &dt);
-
     virtual void update(const float & dt);
     virtual void render(sf::RenderTarget & target);
 };

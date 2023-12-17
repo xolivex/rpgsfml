@@ -13,7 +13,7 @@ void EditorState::initVariables()
 {
     this->paused = false;
     this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
-    this->viewspeed = 100.f;
+    this->viewspeed = 300.f;
 }
 
 void EditorState::initBackground()
@@ -260,17 +260,23 @@ void EditorState::update(const float & dt)
 void EditorState::renderGui(sf::RenderTarget &target)
 {
     if(!this->textureSelector->getActive())
+    {
+        target.setView(this->view);
         target.draw(selectorRect);
 
-    this->textureSelector->render(target);
-    target.draw(this->cursorText);
+    }
 
+    target.setView(this->window->getDefaultView());
+    this->textureSelector->render(target);
     target.draw(this->sidebar);
-    
+
+    target.setView(this->view);
+    target.draw(this->cursorText);
 }
 
 void EditorState::renderButtons(sf::RenderTarget& target)
 {
+    target.setView(this->view);
     for(auto &it : this->buttons)
     {
         it.second->render(target);
@@ -289,10 +295,13 @@ void EditorState::render(sf::RenderTarget * target)
     this->tileMap->render(*target);
 
     target->setView(this->window->getDefaultView());
+    this->renderButtons(*target);
+
     this->renderGui(*target);
 
     if(this->paused)
     {   
+        target->setView(this->window->getDefaultView());
         this->pmenu->render(*target);
     }
 

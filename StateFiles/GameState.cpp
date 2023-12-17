@@ -1,6 +1,19 @@
 #include "GameState.h"
 
-//Initializer functions
+void GameState::initView()
+{
+    view.setSize(sf::Vector2f(
+        this->stateData->gfxSettings->resolution.width,
+        this->stateData->gfxSettings->resolution.height
+    ));
+
+    view.setCenter(sf::Vector2f(
+        this->stateData->gfxSettings->resolution.width / 2.f,
+        this->stateData->gfxSettings->resolution.height / 2.f
+    ));
+}
+
+// Initializer functions
 void GameState::initKeybinds()
 {
     std::ifstream ifs("Config/gamestate_keybinds.ini");
@@ -50,13 +63,14 @@ void GameState::initFonts()
 void GameState::initTileMap()
 {
     this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/image/tile/tilesheet1.png");
+    tileMap->loadFromFile("text.slmp");
 }
 
 //Constructors and Destructors
 GameState::GameState(StateData * state_data)
     : State(state_data)
 {
-    
+    this->initView();
     this->initKeybinds();
     this->initTextures();
     this->initPlayers();
@@ -69,6 +83,11 @@ GameState::~GameState()
     delete pmenu;
     delete this->player;
     delete tileMap;
+}
+
+void GameState::updateView(const float& dt)
+{
+    this->view.setCenter(this->player->getPosition());
 }
 
 void GameState::updateTileMap()
@@ -117,6 +136,7 @@ void GameState::updatePlayerInput(const float &dt)
 
 void GameState::update(const float & dt)
 {
+    this->updateView(dt);
     this->updateMousePositions();
     this->updateKeytime(dt);
     this->updateInput(dt);
@@ -149,10 +169,10 @@ void GameState::render(sf::RenderTarget * target)
     {
         target = this->window;
     }
-
+    target->setView(this->view);
     this->renderTileMap(*target);
-
     this->player->render(*target);
+
     target->setView(this->window->getDefaultView());
     if(this->paused)
     {
