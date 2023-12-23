@@ -209,7 +209,7 @@ void EditorState::updateGui(const float &dt)
     }
     this->cursorText.setPosition(this->mousePosView.x + 50, this->mousePosView.y);
     this->ss.str("");
-    this->ss << this->mousePosView.x << " " << this->mousePosView.y<< "\n"
+    this->ss << this->mousePosView.x << " . " << this->mousePosView.y<< "\n"
              << this->textureRect.left << " " << this->textureRect.top << "\n"
              << this->mousePosGrid.x << " " << this->mousePosGrid.y
              << "\n" << "collision: " << this->collision

@@ -50,6 +50,7 @@ void GameState::initPausedMenu()
 {
     pmenu = new PausedMenu(*this->window,this->font);
     this->pmenu->addButton("QUIT", 800.f, "quit");
+    this->paused = false;
 }
 
 void GameState::initFonts()
