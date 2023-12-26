@@ -72,7 +72,7 @@ void GameState::initFonts()
 
 void GameState::initTileMap()
 {
-    this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/image/tile/tilesheet1.png");
+    this->tileMap = new TileMap(this->stateData->gridSize, 50, 50, "Resources/image/tile/tilesheet1.png");
     tileMap->loadFromFile("text.slmp");
 }
 
@@ -98,12 +98,13 @@ GameState::~GameState()
 
 void GameState::updateView(const float& dt)
 {
-    this->view.setCenter(this->player->getPosition());
+    this->view.setCenter(std::floor(this->player->getPosition().x), std::floor(this->player->getPosition().y));
 }
 
-void GameState::updateTileMap()
+void GameState::updateTileMap(const float & dt)
 {
-
+    this->tileMap->update();
+    this->tileMap->updateCollision(this->player);
 }
 
 void GameState::updateInput(const float &dt)
@@ -113,7 +114,6 @@ void GameState::updateInput(const float &dt)
         if(!this->paused)
         {
             this->pausedState();
-            this->updateTileMap();
         }
         else
         {
@@ -156,6 +156,7 @@ void GameState::update(const float & dt)
     if(!this->paused)
     {
         this->updatePlayerInput(dt);
+        this->updateTileMap(dt);
         this->player->update(dt);
     }
     else

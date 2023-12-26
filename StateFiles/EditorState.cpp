@@ -71,7 +71,7 @@ void EditorState::initPausedMenu()
 }
 void EditorState::initTileMap()
 { 
-    tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/image/tile/tilesheet1.png");
+    tileMap = new TileMap(this->stateData->gridSize, 50, 50, "Resources/image/tile/tilesheet1.png");
 }
 void EditorState::initGui()
 {
@@ -128,16 +128,16 @@ void EditorState::updateEditorInput(const float &dt)
     //MOVE VIEW
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_VIEW_UP"))))
     {
-        this->view.move(0.f, -this->viewspeed * dt);
+        this->view.move(0.f, std::floor(-this->viewspeed * dt));
     }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_VIEW_DOWN"))))
     {
-        this->view.move(0.f, this->viewspeed * dt);
+        this->view.move(0.f, std::floor(this->viewspeed * dt));
     }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_VIEW_LEFT"))))
     {
-        this->view.move(-this->viewspeed * dt, 0.f);
+        this->view.move(std::floor(-this->viewspeed * dt), 0.f);
     }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_VIEW_RIGHT"))))
     {
-        this->view.move(this->viewspeed * dt, 0.f);
+        this->view.move(std::floor(this->viewspeed * dt), 0.f);
     }
 
     if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))

@@ -39,7 +39,7 @@ public:
 
     //functions
     void updateView(const float& dt);
-    void updateTileMap();
+    void updateTileMap(const float & dt);
     void updateInput(const float& dt);
     void updatePlayerInput(const float & dt);
     void update(const float& dt);
