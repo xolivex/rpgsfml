@@ -21,8 +21,11 @@ private:
     TileMap * tileMap;
 
     sf::View view;
+    sf::RenderTexture renderTexture;
+    sf::Sprite renderSprite;
 
     //Functions
+    void initDeferredRender();
     void initView();
     void initKeybinds();
     void initTextures();

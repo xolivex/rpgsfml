@@ -1,5 +1,14 @@
 #include "GameState.h"
 
+void GameState::initDeferredRender()
+{
+    this->renderTexture.create(this->stateData->gfxSettings->resolution.width,
+                               this->stateData->gfxSettings->resolution.height
+    );
+
+    this->renderSprite.setTexture(renderTexture.getTexture());
+}
+
 void GameState::initView()
 {
     view.setSize(sf::Vector2f(
@@ -71,6 +80,7 @@ void GameState::initTileMap()
 GameState::GameState(StateData * state_data)
     : State(state_data)
 {
+    this->initDeferredRender();
     this->initView();
     this->initKeybinds();
     this->initTextures();
@@ -170,13 +180,23 @@ void GameState::render(sf::RenderTarget * target)
     {
         target = this->window;
     }
-    target->setView(this->view);
-    this->renderTileMap(*target);
-    this->player->render(*target);
 
-    target->setView(this->window->getDefaultView());
+    this->renderTexture.clear();
+
+    renderTexture.setView(this->view);
+    this->renderTileMap(renderTexture);
+    this->player->render(renderTexture);
+
     if(this->paused)
     {
-        pmenu->render(*target);
+        renderTexture.setView(this->renderTexture.getDefaultView());
+        pmenu->render(renderTexture);
     }
+
+    //end render
+    this->renderSprite.setTexture(this->renderTexture.getTexture());
+    //this->renderTexture.draw(this->renderSprite);
+    this->renderTexture.display();
+    target->draw(this->renderSprite);
+
 }

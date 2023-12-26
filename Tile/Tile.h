@@ -19,6 +19,8 @@ public:
     bool collision = false, short type = Typetile::DEFAULT);
     virtual ~Tile();
     //Accessors
+    const unsigned getCollision() const;
+    const sf::Vector2f& getPosition() const;
     const std::string getAsString() const;
     
 

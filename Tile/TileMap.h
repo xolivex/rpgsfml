@@ -13,6 +13,7 @@ private:
     sf::Vector2u maxSize;
     std::vector< std::vector< std::vector< Tile *> > > map;
     sf::Texture tileTextureSheet;
+    sf::RectangleShape collisionBox;
 
     void clear();
 public:
