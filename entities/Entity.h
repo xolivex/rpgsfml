@@ -26,7 +26,8 @@ public:
         float offset_x, float offset_y,
         float width, float height);
     //Accessors
-    const sf::Vector2f& getPosition() const;
+    virtual const sf::Vector2f& getPosition() const;
+    virtual const sf::RectangleShape getShape() const;
     //Modiffiers
     virtual void setPosition(const float x, const float y);
 

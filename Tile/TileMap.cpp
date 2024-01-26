@@ -73,12 +73,12 @@ void TileMap::updateCollision(Entity *entity)
 {
     if(entity->getPosition().x < 0.f)
         entity->setPosition(0.f,entity->getPosition().y);
-    else if(entity->getPosition().x > this->maxSizeWorldF.x)
-        entity->setPosition(this->maxSizeWorldF.x, entity->getPosition().y);
+    else if(entity->getPosition().x > this->maxSizeWorldF.x - entity->getShape().getGlobalBounds().width)
+        entity->setPosition(this->maxSizeWorldF.x - entity->getShape().getGlobalBounds().width, entity->getPosition().y);
     if(entity->getPosition().y < 0.f)
         entity->setPosition(entity->getPosition().x, 0.f);
-    else if(entity->getPosition().y > this->maxSizeWorldF.y)
-        entity->setPosition(entity->getPosition().x, this->maxSizeWorldF.y);
+    else if(entity->getPosition().y > this->maxSizeWorldF.y - entity->getShape().getGlobalBounds().height)
+        entity->setPosition(entity->getPosition().x, this->maxSizeWorldF.y - entity->getShape().getGlobalBounds().height);
 }
 
 void TileMap::render(sf::RenderTarget &target)

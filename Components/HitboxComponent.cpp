@@ -16,6 +16,29 @@ HitboxComponent::HitboxComponent(sf::Sprite& sprite,
 HitboxComponent::~HitboxComponent()
 {
 }
+//Accessors
+const sf::Vector2f &HitboxComponent::getPosition() const
+{
+    return this->hitbox.getPosition();
+}
+
+const sf::RectangleShape & HitboxComponent::getShape() const
+{
+    return this->hitbox;
+}
+
+//Modifiers
+void HitboxComponent::setPosition(const sf::Vector2f position)
+{
+    this->hitbox.setPosition(position);
+    this->sprite.setPosition(position.x - offsetX, position.y - offsetY);
+}
+
+void HitboxComponent::setPosition(const float x, const float y)
+{
+    this->hitbox.setPosition(x, y);
+    this->sprite.setPosition(x - offsetX, y - offsetY);
+}
 
 bool HitboxComponent::checkIntersec(const sf::FloatRect& frect)
 {

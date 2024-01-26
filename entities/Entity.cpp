@@ -46,15 +46,25 @@ void Entity::createHitboxComponent(sf::Sprite &sprite,
 
 const sf::Vector2f &Entity::getPosition() const
 {
+    if(this->hitboxComponent)
+        return this->hitboxComponent->getPosition();
+    
     return this->sprite.getPosition();
+}
+
+const sf::RectangleShape Entity::getShape() const
+{
+    return this->hitboxComponent->getShape();
 }
 
 // Functions
 
 void Entity::setPosition(const float x, const float y)
 {
-    
-    this->sprite.setPosition(x, y);
+    if(this->hitboxComponent)
+        this->hitboxComponent->setPosition(x, y);
+    else
+        this->sprite.setPosition(x, y);
     
 }
 
