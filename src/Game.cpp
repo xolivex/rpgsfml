@@ -136,7 +136,9 @@ void Game::update()
 
     if (!this->states.empty())
     {
-        this->states.top()->update(this->dt);
+        if(this->window->hasFocus())
+            this->states.top()->update(this->dt);
+            
         if (this->states.top()->getQuit())
         {
             this->states.top()->endState();

@@ -186,6 +186,7 @@ void GameState::render(sf::RenderTarget * target)
 
     renderTexture.setView(this->view);
     this->renderTileMap(renderTexture);
+    renderTexture.setView(this->view);
     this->player->render(renderTexture);
 
     if(this->paused)
