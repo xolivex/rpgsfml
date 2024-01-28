@@ -27,6 +27,9 @@ public:
     const sf::Vector2f getVelocity();
     //Functions
     const bool getState(const unsigned short state) const;
+    void stopVelocity();
+    void stopVelocityX();
+    void stopVelocityY();
     
 
     void move(const float x, const float y,const float& dt);

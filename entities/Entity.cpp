@@ -53,7 +53,7 @@ const sf::Vector2f &Entity::getPosition() const
     return this->sprite.getPosition();
 }
 
-const sf::FloatRect & Entity::getGlobalBounds() const
+const sf::FloatRect Entity::getGlobalBounds() const
 {
     return this->hitboxComponent->getGlobalBounds();
 }
@@ -75,6 +75,21 @@ void Entity::move(const float dir_x, const float dir_y, const float &dt)
     {
         this->movementComponent->move(dir_x, dir_y, dt); //set velocitys
     }
+}
+
+void Entity::stopVelocity()
+{
+    this->movementComponent->stopVelocity();
+}
+
+void Entity::stopVelocityX()
+{
+    this->movementComponent->stopVelocityX();
+}
+
+void Entity::stopVelocityY()
+{
+    this->movementComponent->stopVelocityY();
 }
 
 void Entity::update(const float &dt)

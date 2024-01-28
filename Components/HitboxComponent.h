@@ -19,7 +19,7 @@ public:
     virtual ~HitboxComponent();
     //Accessors
     const sf::Vector2f& getPosition() const;
-    const sf::FloatRect& getGlobalBounds() const;
+    const sf::FloatRect getGlobalBounds() const;
 
     //Modifiers
     void setPosition(const sf::Vector2f position);
