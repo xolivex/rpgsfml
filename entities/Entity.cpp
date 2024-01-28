@@ -25,6 +25,7 @@ Entity::~Entity()
 //Component functions
 void Entity::setTexture(sf::Texture & texture)
 {
+    //ainda não ta sendo usado
     this->sprite.setTexture(texture);
 }
 
@@ -52,9 +53,9 @@ const sf::Vector2f &Entity::getPosition() const
     return this->sprite.getPosition();
 }
 
-const sf::RectangleShape Entity::getShape() const
+const sf::FloatRect & Entity::getGlobalBounds() const
 {
-    return this->hitboxComponent->getShape();
+    return this->hitboxComponent->getGlobalBounds();
 }
 
 // Functions

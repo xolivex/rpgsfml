@@ -22,9 +22,9 @@ const sf::Vector2f &HitboxComponent::getPosition() const
     return this->hitbox.getPosition();
 }
 
-const sf::RectangleShape & HitboxComponent::getShape() const
+const sf::FloatRect& HitboxComponent::getGlobalBounds() const
 {
-    return this->hitbox;
+    return this->hitbox.getGlobalBounds();
 }
 
 //Modifiers
