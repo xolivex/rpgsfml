@@ -18,6 +18,12 @@ private:
     std::vector< std::vector< std::vector< Tile *> > > map;
     sf::Texture tileTextureSheet;
     sf::RectangleShape collisionBox;
+    int fromX;
+    int fromY;
+    int toX;
+    int toY;
+    int maxCullingX = 10;
+    int maxCullingY = 7;
 
     void clear();
 public:

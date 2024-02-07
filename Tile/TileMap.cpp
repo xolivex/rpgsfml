@@ -91,11 +91,33 @@ void TileMap::updateCollision(Entity *entity)
         entity->setPosition(entity->getPosition().x, this->maxSizeWorldF.y - entity->getGlobalBounds().height);
         entity->stopVelocityY();
     }
+    //culling
+    this->fromX = static_cast<int>(entity->getPosition().x / this->gridSizeF);
+    this->fromX = this->fromX - this->maxCullingX;
+    if(this->fromX < 0)
+        this->fromX = 0;
+    this->fromY = static_cast<int>(entity->getPosition().y / this->gridSizeF);
+    this->fromY = this->fromY - this->maxCullingY;
+    if(this->fromY < 0)
+        this->fromY = 0;
+
+    this->toX = static_cast<int>(entity->getPosition().x / this->gridSizeF);
+    this->toX = this->toX + this->maxCullingX;
+    if(this->toX > this->maxSizeWorldGrid.x)
+        this->toX = this->maxSizeWorldGrid.x;
+    this->toY = static_cast<int>(entity->getPosition().y / this->gridSizeF);
+    this->toY = this->toY + this->maxCullingY;
+    if(this->toY > this->maxSizeWorldGrid.y)
+        this->toY = this->maxSizeWorldGrid.y;
+
+    
+
+    std::cout << "from = "<< this->fromX << " - "<< this->fromY << " " << " to" << this->toX << " - " << this->toY <<"\n";
 }
 
 void TileMap::render(sf::RenderTarget &target)
 {
-    for(auto &x : this->map)
+    /*for(auto &x : this->map)
     {
         for(auto &y : x)
         {
@@ -112,6 +134,20 @@ void TileMap::render(sf::RenderTarget &target)
                 }
             }
         }
+    }*/
+
+    for(int x = this->fromX; x < this->toX; x++)
+    {
+        for(int y = this->fromY ;y < this->toY ; y++)
+        {
+            for(int z = 0; z < this->layers; z++)
+            {
+                if(this->map[x][y][z])
+                    this->map[x][y][z]->render(target);
+            }
+            
+        }
+        
     }
 }
 

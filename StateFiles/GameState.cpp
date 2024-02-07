@@ -58,7 +58,7 @@ void GameState::initPlayers()
 void GameState::initPausedMenu()
 {
     pmenu = new PausedMenu(*this->window,this->font);
-    this->pmenu->addButton("QUIT", 800.f, "quit");
+    this->pmenu->addButton("QUIT", 500.f, "quit");
     this->paused = false;
 }
 
