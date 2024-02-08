@@ -22,8 +22,8 @@ private:
     int fromY;
     int toX;
     int toY;
-    int maxCullingX = 10;
-    int maxCullingY = 7;
+    int maxCullingX = 4;
+    int maxCullingY = 4;
 
     void clear();
 public:

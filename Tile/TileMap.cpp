@@ -92,27 +92,27 @@ void TileMap::updateCollision(Entity *entity)
         entity->stopVelocityY();
     }
     //culling
-    this->fromX = static_cast<int>(entity->getPosition().x / this->gridSizeF);
+    this->fromX = entity->getGridPosition(this->gridSizeU).x;
     this->fromX = this->fromX - this->maxCullingX;
+    
+    this->toX = entity->getGridPosition(this->gridSizeU).x;
+    this->toX = this->toX + this->maxCullingX;
+
     if(this->fromX < 0)
         this->fromX = 0;
-    this->fromY = static_cast<int>(entity->getPosition().y / this->gridSizeF);
+    else if(this->toX > this->maxSizeWorldGrid.x)
+        this->toX = this->maxSizeWorldGrid.x;
+    
+    this->fromY = entity->getGridPosition(this->gridSizeU).y;
     this->fromY = this->fromY - this->maxCullingY;
+    this->toY = entity->getGridPosition(this->gridSizeU).y;
+    this->toY = this->toY + this->maxCullingY;
+
     if(this->fromY < 0)
         this->fromY = 0;
-
-    this->toX = static_cast<int>(entity->getPosition().x / this->gridSizeF);
-    this->toX = this->toX + this->maxCullingX;
-    if(this->toX > this->maxSizeWorldGrid.x)
-        this->toX = this->maxSizeWorldGrid.x;
-    this->toY = static_cast<int>(entity->getPosition().y / this->gridSizeF);
-    this->toY = this->toY + this->maxCullingY;
-    if(this->toY > this->maxSizeWorldGrid.y)
+    else if(this->toY > this->maxSizeWorldGrid.y)
         this->toY = this->maxSizeWorldGrid.y;
 
-    
-
-    std::cout << "from = "<< this->fromX << " - "<< this->fromY << " " << " to" << this->toX << " - " << this->toY <<"\n";
 }
 
 void TileMap::render(sf::RenderTarget &target)

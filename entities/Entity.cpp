@@ -53,6 +53,22 @@ const sf::Vector2f &Entity::getPosition() const
     return this->sprite.getPosition();
 }
 
+const sf::Vector2u Entity::getGridPosition(unsigned gridSizeU)
+{
+    if(this->hitboxComponent)
+    {
+        return sf::Vector2u(
+            static_cast<int>(this->hitboxComponent->getPosition().x) / gridSizeU,
+            static_cast<int>(this->hitboxComponent->getPosition().y) / gridSizeU
+        );
+    }
+    
+    return sf::Vector2u(
+        static_cast<int>(this->sprite.getPosition().x) / gridSizeU,
+        static_cast<int>(this->sprite.getPosition().y) / gridSizeU
+    );
+}
+
 const sf::FloatRect Entity::getGlobalBounds() const
 {
     return this->hitboxComponent->getGlobalBounds();

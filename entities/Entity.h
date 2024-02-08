@@ -27,6 +27,7 @@ public:
         float width, float height);
     //Accessors
     virtual const sf::Vector2f& getPosition() const;
+    virtual const sf::Vector2u getGridPosition(unsigned gridSizeU);
     virtual const sf::FloatRect getGlobalBounds() const;
     //Modiffiers
     virtual void setPosition(const float x, const float y);
