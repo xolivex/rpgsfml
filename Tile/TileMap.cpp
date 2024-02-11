@@ -112,6 +112,25 @@ void TileMap::updateCollision(Entity *entity)
         this->fromY = 0;
     else if(this->toY > this->maxSizeWorldGrid.y)
         this->toY = this->maxSizeWorldGrid.y;
+    //collision culling
+
+    for(int x = this->fromX; x < this->toX; x++)
+    {
+        for(int y = this->fromY ;y < this->toY ; y++)
+        {
+            for(int z = 0; z < this->layers; z++)
+            {
+                if(this->map[x][y][z]->getCollision() && this->map[x][y][z]->intersect(entity->getGlobalBounds()))
+                {
+                    std::cout << "COLISION!" << "\n";
+                    
+                }
+                    
+            }
+            
+        }
+        
+    }
 
 }
 
