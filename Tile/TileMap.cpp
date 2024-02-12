@@ -120,10 +120,56 @@ void TileMap::updateCollision(Entity *entity)
         {
             for(int z = 0; z < this->layers; z++)
             {
-                if(this->map[x][y][z]->getCollision() && this->map[x][y][z]->intersect(entity->getGlobalBounds()))
+                sf::FloatRect playerbounds = entity->getGlobalBounds();
+                sf::FloatRect wallbounds = this->map[x][y][z]->getGlobalBounds();
+                if(this->map[x][y][z]->getCollision() && 
+                this->map[x][y][z]->intersect(entity->getGlobalBounds()))
                 {
                     std::cout << "COLISION!" << "\n";
+
+                    //botton collision
+                    if(playerbounds.top < wallbounds.top
+                    && playerbounds.top + playerbounds.height < wallbounds.top + wallbounds.height
+                    && playerbounds.left < wallbounds.left + wallbounds.width
+                    && playerbounds.left + playerbounds.width > wallbounds.left
+                    )
+                    {
+                        entity->stopVelocityY();
+                        entity->setPosition( playerbounds.left, wallbounds.top - playerbounds.height);
+                    }else 
+                    //top collision
                     
+                    if(playerbounds.top > wallbounds.top
+                    && playerbounds.top + playerbounds.height > wallbounds.top + wallbounds.height
+                    && playerbounds.left < wallbounds.left + wallbounds.width
+                    && playerbounds.left + playerbounds.width > wallbounds.left
+                    )
+                    {
+                        entity->stopVelocityY();
+                        entity->setPosition( playerbounds.left, wallbounds.top + playerbounds.height);
+                    }
+
+                    //right collision 
+                    if(playerbounds.left < wallbounds.left
+                    && playerbounds.left + playerbounds.width < wallbounds.left + wallbounds.width
+                    && playerbounds.top < wallbounds.top + wallbounds.height
+                    && playerbounds.top + playerbounds.height > wallbounds.top
+                    
+                    )
+                    {
+                        entity->stopVelocityX();
+                        entity->setPosition( wallbounds.left - playerbounds.width, playerbounds.top);
+                    //left collision
+                    }else if(playerbounds.left > wallbounds.left
+                    && playerbounds.left + playerbounds.width > wallbounds.left + wallbounds.width
+                    && playerbounds.top > wallbounds.top + wallbounds.height
+                    && playerbounds.top + playerbounds.height > wallbounds.top
+
+                    )
+                    {
+                        entity->stopVelocityX();
+                        entity->setPosition( wallbounds.left + wallbounds.width, playerbounds.top);
+                    }
                 }
                     
             }
@@ -136,7 +182,7 @@ void TileMap::updateCollision(Entity *entity)
 
 void TileMap::render(sf::RenderTarget &target)
 {
-    /*for(auto &x : this->map)
+    for(auto &x : this->map)
     {
         for(auto &y : x)
         {
@@ -153,9 +199,9 @@ void TileMap::render(sf::RenderTarget &target)
                 }
             }
         }
-    }*/
+    }
 
-    for(int x = this->fromX; x < this->toX; x++)
+    /*for(int x = this->fromX; x < this->toX; x++)
     {
         for(int y = this->fromY ;y < this->toY ; y++)
         {
@@ -167,7 +213,7 @@ void TileMap::render(sf::RenderTarget &target)
             
         }
         
-    }
+    }*/
 }
 
 void TileMap::addTile(const unsigned x, const unsigned y, 

@@ -20,6 +20,7 @@ public:
     virtual ~Tile();
     //Accessors
     const unsigned getCollision() const;
+    const sf::FloatRect getGlobalBounds() const;
     const sf::Vector2f& getPosition() const;
     const bool intersect(sf::FloatRect frect) const;
     const std::string getAsString() const;

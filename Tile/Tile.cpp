@@ -26,6 +26,11 @@ const unsigned Tile::getCollision() const
     return this->collision;
 }
 
+const sf::FloatRect Tile::getGlobalBounds() const
+{
+    return this->shape.getGlobalBounds();
+}
+
 const sf::Vector2f &Tile::getPosition() const
 {
     return this->shape.getPosition();
