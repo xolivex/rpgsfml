@@ -125,7 +125,7 @@ void TileMap::updateCollision(Entity *entity)
                 if(this->map[x][y][z]->getCollision() && 
                 this->map[x][y][z]->intersect(entity->getGlobalBounds()))
                 {
-                    std::cout << "COLISION!" << "\n";
+                    //std::cout << "COLISION!" << "\n";
 
                     //botton collision
                     if(playerbounds.top < wallbounds.top
@@ -157,12 +157,13 @@ void TileMap::updateCollision(Entity *entity)
                     
                     )
                     {
+                        std::cout << "right colidiu" << "\n"; 
                         entity->stopVelocityX();
                         entity->setPosition( wallbounds.left - playerbounds.width, playerbounds.top);
                     //left collision
                     }else if(playerbounds.left > wallbounds.left
                     && playerbounds.left + playerbounds.width > wallbounds.left + wallbounds.width
-                    && playerbounds.top > wallbounds.top + wallbounds.height
+                    && playerbounds.top < wallbounds.top + wallbounds.height
                     && playerbounds.top + playerbounds.height > wallbounds.top
 
                     )
