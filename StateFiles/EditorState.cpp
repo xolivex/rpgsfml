@@ -71,7 +71,7 @@ void EditorState::initPausedMenu()
 }
 void EditorState::initTileMap()
 { 
-    tileMap = new TileMap(this->stateData->gridSize, 50, 50, "Resources/image/tile/tilesheet1.png");
+    tileMap = new TileMap(this->stateData->gridSize, 50, 50, "Resources/image/tile/tilesheet1.png",1);
 }
 void EditorState::initGui()
 {

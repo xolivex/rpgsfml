@@ -19,7 +19,7 @@ void TileMap::clear()
     //std::cout << this->map.size() << "\n";
 }
 
-TileMap::TileMap(float grid_SizeF, float width, float height, std::string texture_file)
+TileMap::TileMap(float grid_SizeF, float width, float height, std::string texture_file, unsigned render_type)
 {
     this->gridSizeF = grid_SizeF;
     this->gridSizeU = static_cast<unsigned>(gridSizeF);
@@ -28,7 +28,7 @@ TileMap::TileMap(float grid_SizeF, float width, float height, std::string textur
     this->maxSizeWorldF.x = width * grid_SizeF;
     this->maxSizeWorldF.y = height * grid_SizeF;
     this->textureFile = texture_file;
-
+    this->renderType = render_type;
     this->layers = 1;
     this->map.resize(this->maxSizeWorldGrid.x, std::vector< std::vector<Tile*> > ());
     for(size_t x = 0; x < this->maxSizeWorldGrid.x ; x++)
@@ -184,37 +184,42 @@ void TileMap::updateCollision(Entity *entity, const float & dt)
 
 void TileMap::render(sf::RenderTarget &target)
 {
-    /*for(auto &x : this->map)
+    if(renderType == renderTypegame::RENDER_EDITOR)
     {
-        for(auto &y : x)
+
+        for (auto &x : this->map)
         {
-            for(auto &z : y)
+            for (auto &y : x)
             {
-                if(z)
+                for (auto &z : y)
                 {
-                    z->render(target);
-                    if(z->getCollision())
+                    if (z)
                     {
-    	                this->collisionBox.setPosition(z->getPosition());
-                        target.draw(this->collisionBox);
+                        z->render(target);
+                        if (z->getCollision())
+                        {
+                            this->collisionBox.setPosition(z->getPosition());
+                            target.draw(this->collisionBox);
+                        }
                     }
                 }
             }
         }
-    }*/
+    }
 
-    for(int x = this->fromX; x < this->toX; x++)
+    if(renderType == renderTypegame::RENDER_GAME)
     {
-        for(int y = this->fromY ;y < this->toY ; y++)
+        for (int x = this->fromX; x < this->toX; x++)
         {
-            for(int z = 0; z < this->layers; z++)
+            for (int y = this->fromY; y < this->toY; y++)
             {
-                if(this->map[x][y][z])
-                    this->map[x][y][z]->render(target);
+                for (int z = 0; z < this->layers; z++)
+                {
+                    if (this->map[x][y][z])
+                        this->map[x][y][z]->render(target);
+                }
             }
-            
         }
-        
     }
 }
 

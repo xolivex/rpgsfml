@@ -12,6 +12,12 @@ private:
     float gridSizeF;
     unsigned gridSizeU;
     unsigned layers;
+    enum renderTypegame
+    {
+        RENDER_GAME = 0,
+        RENDER_EDITOR
+    };
+    unsigned renderType;
     std::string textureFile;
     sf::Vector2u maxSizeWorldGrid;
     sf::Vector2f maxSizeWorldF;
@@ -27,7 +33,7 @@ private:
 
     void clear();
 public:
-    TileMap(float grid_SizeF, float width, float height, std::string texture_file);
+    TileMap(float grid_SizeF, float width, float height, std::string texture_file, unsigned render_type = 0);
     virtual ~TileMap();
 
 
