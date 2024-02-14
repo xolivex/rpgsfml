@@ -6,8 +6,8 @@ Tile::Tile()
     this->type = 0;
 }
 
-Tile::Tile(unsigned grid_x, unsigned grid_y, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect,
-bool collision, short type)
+Tile::Tile(int grid_x, int grid_y, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect,
+bool collision, int type)
 {
     this->shape.setSize(sf::Vector2f(gridSizeF, gridSizeF));
     this->shape.setPosition(static_cast<float>(grid_x) * gridSizeF,static_cast<float>(grid_y) * gridSizeF);
@@ -21,7 +21,7 @@ Tile::~Tile()
 {
 }
 
-const unsigned Tile::getCollision() const
+const int Tile::getCollision() const
 {
     return this->collision;
 }

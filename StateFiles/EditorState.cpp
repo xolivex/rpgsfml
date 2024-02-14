@@ -87,7 +87,8 @@ void EditorState::initGui()
     this->selectorRect.setTexture(this->tileMap->getTileSheet());
     this->selectorRect.setTextureRect(this->textureRect);
 
-    this->textureSelector = new gui::TextureSelector(10.f, 10.f, 500.f, 500.f, 
+    this->textureSelector = new gui::TextureSelector(this->sidebar.getGlobalBounds().width + 1.f,
+     this->sidebar.getGlobalBounds().top, 500.f, 500.f, 
         this->stateData->gridSize,this->tileMap->getTileSheet(), this->font, "TS");
     
 }

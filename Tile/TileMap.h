@@ -10,14 +10,14 @@ class TileMap
 {
 private:
     float gridSizeF;
-    unsigned gridSizeU;
-    unsigned layers;
+    int gridSizeI;
+    int layers;
     enum renderTypegame
     {
         RENDER_GAME = 0,
         RENDER_EDITOR
     };
-    unsigned renderType;
+    int renderType;
     std::string textureFile;
     sf::Vector2u maxSizeWorldGrid;
     sf::Vector2f maxSizeWorldF;
@@ -33,7 +33,7 @@ private:
 
     void clear();
 public:
-    TileMap(float grid_SizeF, float width, float height, std::string texture_file, unsigned render_type = 0);
+    TileMap(float grid_SizeF, float width, float height, std::string texture_file, int render_type = 0);
     virtual ~TileMap();
 
 
@@ -45,8 +45,8 @@ public:
     void updateCollision(Entity * entity, const float & dt);
     void render(sf::RenderTarget & target);
 
-    void addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& textureRect, const bool collision, const short type);
-    void removeTile(const unsigned x, const unsigned y, const unsigned z);
+    void addTile(const int x, const int y, const int z, const sf::IntRect& textureRect, const bool collision, const int type);
+    void removeTile(const int x, const int y, const int z);
 
     void saveToFile(const std::string file_name);
     void loadFromFile(const std::string file_name);

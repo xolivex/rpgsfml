@@ -15,11 +15,11 @@ protected:
     short type;
 public:
     Tile();
-    Tile(unsigned grid_x, unsigned grid_y, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect,
-    bool collision = false, short type = Typetile::DEFAULT);
+    Tile(int grid_x, int grid_y, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect,
+    bool collision = false, int type = Typetile::DEFAULT);
     virtual ~Tile();
     //Accessors
-    const unsigned getCollision() const;
+    const int getCollision() const;
     const sf::FloatRect getGlobalBounds() const;
     const sf::Vector2f& getPosition() const;
     const bool intersect(sf::FloatRect frect) const;

@@ -62,7 +62,7 @@ void State::updateMousePositions(sf::View * view)
     this->mousePosScreen = sf::Mouse::getPosition();
     this->mousePosWindow = sf::Mouse::getPosition(*this->window);
     this->mousePosView = this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window));
-    this->mousePosGrid = sf::Vector2u(
+    this->mousePosGrid = sf::Vector2i(
         //the conversion for unsigned it happanes inside of class Vector2u
         /*static_cast<unsigned>(*/this->mousePosView.x/*)*/ / /*static_cast<unsigned>(*/this->gridSize/*)*/,
         /*static_cast<unsigned>(*/this->mousePosView.y/*)*/ / /*static_cast<unsigned>(*/this->gridSize/*)*/

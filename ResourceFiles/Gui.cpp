@@ -1,10 +1,10 @@
 #include "Gui.h"
 
-gui::Button::Button(float x, float y, float width, float height, sf::Font * font, std::string text, unsigned short character_size,
+gui::Button::Button(float x, float y, float width, float height, sf::Font * font, std::string text, int character_size,
         sf::Color text_idle_color, sf::Color text_hover_color,sf::Color text_active_color,
         sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color,
         sf::Color outline_idle_color, sf::Color outline_hover_color,
-        sf::Color outline_active_color, short unsigned id
+        sf::Color outline_active_color, int id
         )
 {
     this->id = id;
@@ -104,7 +104,7 @@ const std::string gui::Button::getText() const
     return this->text.getString();
 }
 
-const unsigned short& gui::Button::getId() const
+const int & gui::Button::getId() const
 {
     return this->id;
 }
@@ -131,7 +131,7 @@ void gui::Button::render(sf::RenderTarget &target)
 
 gui::DropDownList::DropDownList(
     float x, float y, float width, float height,
-    sf::Font& font, std::string list[], unsigned short numbElements, unsigned short default_index)
+    sf::Font& font, std::string list[], int numbElements, int default_index)
     : font(font), showList(false), keytimeMax(2.f), keytime(0.f)
 {
     this->activeElement = new gui::Button(
@@ -142,7 +142,7 @@ gui::DropDownList::DropDownList(
                 sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50)
             );
     
-    for(size_t i = 0; i < numbElements; ++i)
+    for(int i = 0; i < numbElements; ++i)
     {
         this->list.push_back(
             new gui::Button(
@@ -159,13 +159,13 @@ gui::DropDownList::DropDownList(
 gui::DropDownList::~DropDownList()
 {
     delete this->activeElement;
-    for(size_t i = 0; i < this->list.size(); i++)
+    for(int i = 0; i < this->list.size(); i++)
     {
         delete this->list[i];
     }
 }
 
-const short unsigned & gui::DropDownList::getActiveElementId() const
+const int gui::DropDownList::getActiveElementId() const
 {
     return this->activeElement->getId();
 }
