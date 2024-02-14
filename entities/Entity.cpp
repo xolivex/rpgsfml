@@ -74,6 +74,17 @@ const sf::FloatRect Entity::getGlobalBounds() const
     return this->hitboxComponent->getGlobalBounds();
 }
 
+const sf::FloatRect & Entity::getNextPositionBounds(const float & dt) const
+{
+    if(this->hitboxComponent && this->movementComponent)
+    {
+        
+        return this->hitboxComponent->getNextPosition(this->movementComponent->getVelocity() * dt);
+    }
+    
+    return defaultFR;
+}
+
 // Functions
 
 void Entity::setPosition(const float x, const float y)

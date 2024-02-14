@@ -11,7 +11,7 @@ private:
     void initVariables();
 protected:
     sf::Sprite sprite;
-    
+    sf::FloatRect defaultFR;
     MovementComponent* movementComponent;
     AnimationComponent* animationComponent;
     HitboxComponent* hitboxComponent;
@@ -29,6 +29,7 @@ public:
     virtual const sf::Vector2f& getPosition() const;
     virtual const sf::Vector2u getGridPosition(unsigned gridSizeU);
     virtual const sf::FloatRect getGlobalBounds() const;
+    virtual const sf::FloatRect & getNextPositionBounds(const float & dt) const;
     //Modiffiers
     virtual void setPosition(const float x, const float y);
 

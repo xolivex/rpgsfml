@@ -104,7 +104,7 @@ void GameState::updateView(const float& dt)
 void GameState::updateTileMap(const float & dt)
 {
     this->tileMap->update();
-    this->tileMap->updateCollision(this->player);
+    this->tileMap->updateCollision(this->player, dt);
 }
 
 void GameState::updateInput(const float &dt)

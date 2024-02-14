@@ -126,6 +126,7 @@ void SettingsState::updateGui(const float &dt)
         this->window->create(this->stateData->gfxSettings->resolution,
                              this->stateData->gfxSettings->title,
                              sf::Style::Titlebar | sf::Style::Close);
+        this->window->setFramerateLimit(this->stateData->gfxSettings->frameRateLimit);
     }
 
     if (this->buttons["EXIT"]->isPressed())

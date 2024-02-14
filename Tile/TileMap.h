@@ -22,8 +22,8 @@ private:
     int fromY;
     int toX;
     int toY;
-    int maxCullingX = 2;
-    int maxCullingY = 2;
+    int maxCullingX = 3;
+    int maxCullingY = 3;
 
     void clear();
 public:
@@ -36,7 +36,7 @@ public:
 
     //Functions
     void update();
-    void updateCollision(Entity * entity);
+    void updateCollision(Entity * entity, const float & dt);
     void render(sf::RenderTarget & target);
 
     void addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& textureRect, const bool collision, const short type);
