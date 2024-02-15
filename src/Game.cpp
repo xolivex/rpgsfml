@@ -137,6 +137,8 @@ void Game::update()
     if (!this->states.empty())
     {
         if(this->window->hasFocus())
+        {
+
             this->states.top()->update(this->dt);
             
         if (this->states.top()->getQuit())
@@ -144,6 +146,7 @@ void Game::update()
             this->states.top()->endState();
             delete this->states.top();
             this->states.pop();
+        }
         }
     }
     // Aplication end

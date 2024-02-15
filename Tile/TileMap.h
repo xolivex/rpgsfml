@@ -19,7 +19,7 @@ private:
     };
     int renderType;
     std::string textureFile;
-    sf::Vector2u maxSizeWorldGrid;
+    sf::Vector2i maxSizeWorldGrid;
     sf::Vector2f maxSizeWorldF;
     std::vector< std::vector< std::vector< Tile *> > > map;
     sf::Texture tileTextureSheet;
@@ -28,12 +28,14 @@ private:
     int fromY;
     int toX;
     int toY;
-    int maxCullingX = 3;
-    int maxCullingY = 3;
+    int maxCullingX = 1;
+    int maxCullingY = 1;
+    int maxRenderCullingX = 10;
+    int maxRenderCullingY = 6;
 
     void clear();
 public:
-    TileMap(float grid_SizeF, float width, float height, std::string texture_file, int render_type = 0);
+    TileMap(float grid_SizeF, float width, float height, std::string texture_file, int render_type = renderTypegame::RENDER_GAME);
     virtual ~TileMap();
 
 

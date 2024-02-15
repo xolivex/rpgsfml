@@ -21,10 +21,14 @@ void TileMap::clear()
 
 TileMap::TileMap(float grid_SizeF, float width, float height, std::string texture_file, int render_type)
 {
+    this->fromX = 0;
+    this->fromY = 0;
+    this->toX = 0;
+    this->toY = 0;
     this->gridSizeF = grid_SizeF;
     this->gridSizeI = static_cast<int>(gridSizeF);
-    this->maxSizeWorldGrid.x = width;
-    this->maxSizeWorldGrid.y = height;
+    this->maxSizeWorldGrid.x = static_cast<int>(width);
+    this->maxSizeWorldGrid.y = static_cast<int>(height);
     this->maxSizeWorldF.x = width * grid_SizeF;
     this->maxSizeWorldF.y = height * grid_SizeF;
     this->textureFile = texture_file;
@@ -93,25 +97,28 @@ void TileMap::updateCollision(Entity *entity, const float & dt)
     }
     //culling
     this->fromX = entity->getGridPosition(this->gridSizeI).x;
-    this->fromX = this->fromX - this->maxCullingX;
+    this->fromX -= this->maxCullingX;
     
     this->toX = entity->getGridPosition(this->gridSizeI).x;
-    this->toX = this->toX + this->maxCullingX;
+    this->toX += this->maxCullingX + 1;
 
-    if(this->fromX < 0)
+    //prevents negative number in vector map x
+   if(this->fromX < 0)
         this->fromX = 0;
     else if(this->toX > this->maxSizeWorldGrid.x)
         this->toX = this->maxSizeWorldGrid.x;
     
     this->fromY = entity->getGridPosition(this->gridSizeI).y;
-    this->fromY = this->fromY - this->maxCullingY;
+    this->fromY -= this->maxCullingY;
     this->toY = entity->getGridPosition(this->gridSizeI).y;
-    this->toY = this->toY + this->maxCullingY;
+    this->toY += this->maxCullingY + 1;
 
+    //prevents negative number in vector map y
     if(this->fromY < 0)
         this->fromY = 0;
     else if(this->toY > this->maxSizeWorldGrid.y)
         this->toY = this->maxSizeWorldGrid.y;
+    
     //collision culling
 
     for(int x = this->fromX; x < this->toX; x++)
@@ -120,66 +127,80 @@ void TileMap::updateCollision(Entity *entity, const float & dt)
         {
             for(int z = 0; z < this->layers; z++)
             {
-                sf::FloatRect playerbounds = entity->getGlobalBounds();
-                sf::FloatRect wallbounds = this->map[x][y][z]->getGlobalBounds();
-                sf::FloatRect nextPositionBounds = entity->getNextPositionBounds(dt);
-                std::cout << nextPositionBounds.left << " - " << nextPositionBounds.top << "\n";
-                if(this->map[x][y][z]->getCollision() && 
-                this->map[x][y][z]->intersect(nextPositionBounds))
+                if (this->map[x][y][z])
                 {
-                    std::cout << "COLISION!" << "\n";
 
-                    //botton collision
-                    if(playerbounds.top < wallbounds.top
-                    && playerbounds.top + playerbounds.height < wallbounds.top + wallbounds.height
-                    && playerbounds.left < wallbounds.left + wallbounds.width
-                    && playerbounds.left + playerbounds.width > wallbounds.left
-                    )
-                    {
-                        entity->stopVelocityY();
-                        entity->setPosition( playerbounds.left, wallbounds.top - playerbounds.height);
-                    }
-                    //top collision
-                    else if(playerbounds.top > wallbounds.top
-                    && playerbounds.top + playerbounds.height > wallbounds.top + wallbounds.height
-                    && playerbounds.left < wallbounds.left + wallbounds.width
-                    && playerbounds.left + playerbounds.width > wallbounds.left
-                    )
-                    {
-                        entity->stopVelocityY();
-                        entity->setPosition( playerbounds.left, wallbounds.top + wallbounds.height);
-                    }
+                    sf::FloatRect playerbounds = entity->getGlobalBounds();
+                    sf::FloatRect wallbounds = this->map[x][y][z]->getGlobalBounds();
+                    sf::FloatRect nextPositionBounds = entity->getNextPositionBounds(dt);
+                    std::cout << nextPositionBounds.left << " - " << nextPositionBounds.top << "\n";
 
-                    //right collision 
-                    if(playerbounds.left < wallbounds.left
-                    && playerbounds.left + playerbounds.width < wallbounds.left + wallbounds.width
-                    && playerbounds.top < wallbounds.top + wallbounds.height
-                    && playerbounds.top + playerbounds.height > wallbounds.top
-                    
-                    )
-                    {
-                        entity->stopVelocityX();
-                        entity->setPosition( wallbounds.left - playerbounds.width, playerbounds.top);
-                    }
-                    //left collision
-                    else if(playerbounds.left > wallbounds.left
-                    && playerbounds.left + playerbounds.width > wallbounds.left + wallbounds.width
-                    && playerbounds.top < wallbounds.top + wallbounds.height
-                    && playerbounds.top + playerbounds.height > wallbounds.top
+                    if (this->map[x][y][z]->getCollision() &&
+                        this->map[x][y][z]->intersect(nextPositionBounds)
 
                     )
                     {
-                        entity->stopVelocityX();
-                        entity->setPosition( wallbounds.left + wallbounds.width, playerbounds.top);
+                        std::cout << "COLISION!"
+                                  << "\n";
+                        // botton collision
+                        if (playerbounds.top < wallbounds.top && playerbounds.top + playerbounds.height < wallbounds.top + wallbounds.height && playerbounds.left < wallbounds.left + wallbounds.width && playerbounds.left + playerbounds.width > wallbounds.left)
+                        {
+                            entity->stopVelocityY();
+                            entity->setPosition(playerbounds.left, wallbounds.top - playerbounds.height);
+                        }
+                        // top collision
+                        else if (playerbounds.top > wallbounds.top && playerbounds.top + playerbounds.height > wallbounds.top + wallbounds.height && playerbounds.left < wallbounds.left + wallbounds.width && playerbounds.left + playerbounds.width > wallbounds.left)
+                        {
+                            entity->stopVelocityY();
+                            entity->setPosition(playerbounds.left, wallbounds.top + wallbounds.height);
+                        }
+
+                        // right collision
+                        if (playerbounds.left < wallbounds.left && playerbounds.left + playerbounds.width < wallbounds.left + wallbounds.width && playerbounds.top < wallbounds.top + wallbounds.height && playerbounds.top + playerbounds.height > wallbounds.top
+
+                        )
+                        {
+                            entity->stopVelocityX();
+                            entity->setPosition(wallbounds.left - playerbounds.width, playerbounds.top);
+                        }
+                        // left collision
+                        else if (playerbounds.left > wallbounds.left && playerbounds.left + playerbounds.width > wallbounds.left + wallbounds.width && playerbounds.top < wallbounds.top + wallbounds.height && playerbounds.top + playerbounds.height > wallbounds.top
+
+                        )
+                        {
+                            entity->stopVelocityX();
+                            entity->setPosition(wallbounds.left + wallbounds.width, playerbounds.top);
+                        }
                     }
                 }
-                    
             }
             
         }
         
     }
+    //culling render
+    this->fromX = entity->getGridPosition(this->gridSizeI).x;
+    this->fromX -= this->maxRenderCullingX;
+    
+    this->toX = entity->getGridPosition(this->gridSizeI).x;
+    this->toX += this->maxRenderCullingX + 1;
 
+    //prevents negative number in vector map x
+   if(this->fromX < 0)
+        this->fromX = 0;
+    else if(this->toX > this->maxSizeWorldGrid.x)
+        this->toX = this->maxSizeWorldGrid.x;
+    
+    this->fromY = entity->getGridPosition(this->gridSizeI).y;
+    this->fromY -= this->maxRenderCullingY;
+    this->toY = entity->getGridPosition(this->gridSizeI).y;
+    this->toY += this->maxRenderCullingY + 1;
+
+    //prevents negative number in vector map y
+    if(this->fromY < 0)
+        this->fromY = 0;
+    else if(this->toY > this->maxSizeWorldGrid.y)
+        this->toY = this->maxSizeWorldGrid.y;
 }
 
 void TileMap::render(sf::RenderTarget &target)
@@ -206,7 +227,7 @@ void TileMap::render(sf::RenderTarget &target)
             }
         }
     }
-
+    
     if(renderType == renderTypegame::RENDER_GAME)
     {
         for (int x = this->fromX; x < this->toX; x++)

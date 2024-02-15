@@ -21,7 +21,7 @@ Tile::~Tile()
 {
 }
 
-const int Tile::getCollision() const
+const bool Tile::getCollision() const
 {
     return this->collision;
 }

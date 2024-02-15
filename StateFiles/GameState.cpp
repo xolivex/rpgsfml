@@ -74,6 +74,7 @@ void GameState::initTileMap()
 {
     this->tileMap = new TileMap(this->stateData->gridSize, 50, 50, "Resources/image/tile/tilesheet1.png");
     tileMap->loadFromFile("text.slmp");
+    
 }
 
 //Constructors and Destructors

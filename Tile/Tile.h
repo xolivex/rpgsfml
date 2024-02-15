@@ -19,7 +19,7 @@ public:
     bool collision = false, int type = Typetile::DEFAULT);
     virtual ~Tile();
     //Accessors
-    const int getCollision() const;
+    const bool getCollision() const;
     const sf::FloatRect getGlobalBounds() const;
     const sf::Vector2f& getPosition() const;
     const bool intersect(sf::FloatRect frect) const;
