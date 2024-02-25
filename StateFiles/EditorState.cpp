@@ -13,7 +13,7 @@ void EditorState::initVariables()
 {
     this->paused = false;
     this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
-    this->viewspeed = 300.f;
+    this->viewspeed = 500.f;
 }
 
 void EditorState::initBackground()

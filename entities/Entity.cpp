@@ -76,7 +76,7 @@ const sf::FloatRect Entity::getGlobalBounds() const
     return this->hitboxComponent->getGlobalBounds();
 }
 
-const sf::FloatRect & Entity::getNextPositionBounds(const float & dt) const
+const sf::FloatRect Entity::getNextPositionBounds(const float & dt) const
 {
     if(this->hitboxComponent && this->movementComponent)
     {
@@ -84,7 +84,7 @@ const sf::FloatRect & Entity::getNextPositionBounds(const float & dt) const
         return this->hitboxComponent->getNextPosition(this->movementComponent->getVelocity() * dt);
     }
     
-    return defaultFR;
+    return sf::FloatRect(-1.f,-1.f,-1.f,-1.f);
 }
 
 // Functions
