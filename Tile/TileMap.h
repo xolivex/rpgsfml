@@ -21,7 +21,7 @@ private:
     std::string textureFile;
     sf::Vector2i maxSizeWorldGrid;
     sf::Vector2f maxSizeWorldF;
-    std::vector< std::vector< std::vector< Tile *> > > map;
+    std::vector< std::vector< std::vector< std::vector< Tile *> > > > map;
     sf::Texture tileTextureSheet;
     sf::RectangleShape collisionBox;
     int fromX;
