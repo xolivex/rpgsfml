@@ -47,8 +47,8 @@ public:
     void updateCollision(Entity * entity, const float & dt);
     void render(sf::RenderTarget & target);
 
-    void addTile(const int x, const int y, const int z, const sf::IntRect& textureRect, const bool collision, const int type);
-    void removeTile(const int x, const int y, const int z);
+    void addTile(const int x, const int y, const int layer, const sf::IntRect& textureRect, const bool collision, const int type);
+    void removeTile(const int x, const int y, const int layer = 0);
 
     void saveToFile(const std::string file_name);
     void loadFromFile(const std::string file_name);
