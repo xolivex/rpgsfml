@@ -44,7 +44,7 @@ public:
 
     //Functions
     void update();
-    void updateCollision(Entity * entity, const float & dt);
+    void updateCollision(const float & dt, sf::Vector2i * mousePosGrid, Entity * entity);
     void render(sf::RenderTarget & target);
 
     void addTile(const int x, const int y, const int layer, const sf::IntRect& textureRect, const bool collision, const int type);

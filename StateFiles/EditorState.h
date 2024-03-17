@@ -57,6 +57,7 @@ public:
     void updateInput(const float & dt);
     void updateGui(const float &dt);
     void updateButtons();
+    void updateMap(const float &dt);
     void update(const float& dt);
     void renderGui(sf::RenderTarget& target);
     void renderButtons(sf::RenderTarget& target);

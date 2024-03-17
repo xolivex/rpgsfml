@@ -71,7 +71,7 @@ void EditorState::initPausedMenu()
 }
 void EditorState::initTileMap()
 { 
-    tileMap = new TileMap(this->stateData->gridSize, 50, 50, "Resources/image/tile/tilesheet1.png",1);
+    this->tileMap = new TileMap(this->stateData->gridSize, 50, 50, "Resources/image/tile/tilesheet1.png",1);
 }
 void EditorState::initGui()
 {
@@ -118,8 +118,8 @@ EditorState::~EditorState()
         delete it->second;
     }
 
-    delete pmenu;
-    delete tileMap;
+    delete this->pmenu;
+    delete this->tileMap;
     delete this->textureSelector;
 }
 
@@ -226,6 +226,11 @@ void EditorState::updateButtons()
     }
 }
 
+void EditorState::updateMap(const float &dt)
+{
+    this->tileMap->updateCollision(dt, &this->mousePosGrid, NULL);
+}
+
 void EditorState::update(const float & dt)
 {
     this->updateKeytime(dt);
@@ -236,6 +241,7 @@ void EditorState::update(const float & dt)
     {
         this->updateGui(dt);
         this->updateEditorInput(dt);
+        this->updateMap(dt);
     }
     else //paused
     {
