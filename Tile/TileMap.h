@@ -24,6 +24,7 @@ private:
     std::vector< std::vector< std::vector< std::vector< Tile *> > > > map;
     sf::Texture tileTextureSheet;
     sf::RectangleShape collisionBox;
+    std::stack<Tile*> deferredTileRender;
     int fromX;
     int fromY;
     int toX;
@@ -46,6 +47,7 @@ public:
     void update();
     void updateCollision(const float & dt, sf::Vector2i * mousePosGrid, Entity * entity);
     void render(sf::RenderTarget & target);
+    void deferredStackRender(sf::RenderTarget & target);
 
     void addTile(const int x, const int y, const int layer, const sf::IntRect& textureRect, const bool collision, const int type);
     void removeTile(const int x, const int y, const int layer = 0);

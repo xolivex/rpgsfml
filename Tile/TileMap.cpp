@@ -213,7 +213,7 @@ void TileMap::updateCollision(const float & dt, sf::Vector2i * mousePosGrid, Ent
     //----------
     if (renderType == renderTypegame::RENDER_EDITOR && mousePosGrid != NULL)
     {
-        std::cout << "render_editor_culling" <<"\n";
+        
         // culling render
         this->fromX = mousePosGrid->x;
         this->fromX -= this->maxRenderCullingX;
@@ -254,7 +254,16 @@ void TileMap::render(sf::RenderTarget &target)
                     for (int k = 0; k < this->map[x][y][z].size(); k++)
                     {
                         if (this->map[x][y][z][k])
-                            this->map[x][y][z][k]->render(target);
+                        {
+                            if(this->map[x][y][z][k]->getTileType() == Typetile::DODAD)
+                            {
+                                this->deferredTileRender.push(this->map[x][y][z][k]);
+                            }
+                            else
+                            {
+                                this->map[x][y][z][k]->render(target);
+                            }
+                        }
                     }
                 }
             }
@@ -272,12 +281,31 @@ void TileMap::render(sf::RenderTarget &target)
                     for (int k = 0; k < this->map[x][y][z].size(); k++)
                     {
                         if (this->map[x][y][z][k])
-                            this->map[x][y][z][k]->render(target);
+                        {
+                            if(this->map[x][y][z][k]->getTileType() == Typetile::DODAD)
+                            {
+                                this->deferredTileRender.push(this->map[x][y][z][k]);
+                            }
+                            else
+                            {
+                                this->map[x][y][z][k]->render(target);
+                            }
+                        }
                     }
                 }
             }
         }
     }
+}
+
+void TileMap::deferredStackRender(sf::RenderTarget &target)
+{
+    while (!this->deferredTileRender.empty())
+    {
+        this->deferredTileRender.top()->render(target);
+        this->deferredTileRender.pop();
+    }
+    
 }
 
 void TileMap::addTile(const int x, const int y, 

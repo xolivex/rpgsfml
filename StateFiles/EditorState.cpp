@@ -300,6 +300,7 @@ void EditorState::render(sf::RenderTarget * target)
     //map
     target->setView(this->view);
     this->tileMap->render(*target);
+    this->tileMap->deferredStackRender(*target);
 
     target->setView(this->window->getDefaultView());
     this->renderButtons(*target);

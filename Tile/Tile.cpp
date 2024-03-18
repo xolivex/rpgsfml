@@ -21,6 +21,11 @@ Tile::~Tile()
 {
 }
 
+const short Tile::getTileType()
+{
+    return this->type;
+}
+
 const bool Tile::getCollision() const
 {
     return this->collision;

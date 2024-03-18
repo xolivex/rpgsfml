@@ -3,7 +3,7 @@
 
 #include "../includes.h"
 
-enum Typetile { DEFAULT = 0};
+enum Typetile { DEFAULT = 0, DODAD};
 
 class Tile
 {
@@ -19,6 +19,7 @@ public:
     bool collision = false, int type = Typetile::DEFAULT);
     virtual ~Tile();
     //Accessors
+    const short getTileType();
     const bool getCollision() const;
     const sf::FloatRect getGlobalBounds() const;
     const sf::Vector2f& getPosition() const;
