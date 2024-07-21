@@ -40,6 +40,7 @@ void Game::initStateData()
     this->stateData.supportedKeys = &this->supportedKeys;
     this->stateData.states = &this->states;
     this->stateData.gridSize = this->gridSize;
+    this->stateData.event = &this->event;
     
 }
 
@@ -138,7 +139,6 @@ void Game::update()
     {
         if(this->window->hasFocus())
         {
-
             this->states.top()->update(this->dt);
             
         if (this->states.top()->getQuit())

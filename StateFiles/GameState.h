@@ -7,15 +7,16 @@
 
 
 
-class Player;
 class PauseMenu;
 class TileMap;
+//class PlayerGUI;
 
 class GameState : public State
 {
 private:
     //variables
     Player * player;
+    PlayerGUI * playerGui;
     PausedMenu * pmenu;
     sf::Font font;
     TileMap * tileMap;
@@ -33,6 +34,7 @@ private:
     void initPausedMenu();
     void initFonts();
     void initTileMap();
+    void initplayerGui();
 public:
     GameState(StateData * state_data);
     virtual ~GameState();

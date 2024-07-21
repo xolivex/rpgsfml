@@ -4,10 +4,12 @@
 #include "../Components/MovementComponent.h"
 #include "../Components/AnimationComponent.h"
 #include "../Components/HitboxComponent.h"
+#include "../Components/AttributeComponent.h"
 
 class HitboxComponent;
 class MovementComponent;
 class AnimationComponent;
+class AttributeComponent;
 
 class Entity
 {
@@ -18,6 +20,7 @@ protected:
     MovementComponent* movementComponent;
     AnimationComponent* animationComponent;
     HitboxComponent* hitboxComponent;
+    AttributeComponent * attributecomponent;
 public:
     Entity();
     virtual ~Entity();
@@ -28,6 +31,7 @@ public:
     void createHitboxComponent(sf::Sprite& sprite, 
         float offset_x, float offset_y,
         float width, float height);
+    void createAttributeComponent(const unsigned int level);
     //Accessors
     virtual const sf::Vector2f& getPosition() const;
     virtual const sf::Vector2i getGridPosition(int gridSizeI);

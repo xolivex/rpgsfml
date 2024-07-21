@@ -143,23 +143,27 @@ void EditorState::updateEditorInput(const float &dt)
 
     if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
     {
-
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
-        {
-            if (!this->textureSelector->getActive())
+            if (this->stateData->event->type == sf::Event::MouseButtonReleased)
             {
-                this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0,this->textureRect, this->collision, this->type);
+                std::cout << "mouse release"
+                          << "\n";
+                if (this->stateData->event->mouseButton.button == sf::Mouse::Button::Left && this->getKeytime())
+                {
+                    if (!this->textureSelector->getActive())
+                    {
+                        this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect, this->collision, this->type);
+                    }
+                    else
+                    {
+                        this->textureRect = this->textureSelector->getTextureRect();
+                    }
+                }
+                else if (this->stateData->event->mouseButton.button  == sf::Mouse::Right && this->getKeytime())
+                {
+                    if (!this->textureSelector->getActive())
+                        this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+                }
             }
-            else
-            {
-                this->textureRect = this->textureSelector->getTextureRect();
-            }
-        }
-        else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
-        {
-            if (!this->textureSelector->getActive())
-                this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
-        }
     }
 
     //keys for collision and type tile

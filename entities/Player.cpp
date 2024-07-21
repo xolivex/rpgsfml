@@ -1,5 +1,6 @@
 #include "Player.h"
 
+
 // Variables
 
 // Initializer functions
@@ -22,6 +23,7 @@ Player::Player(float x, float y, sf::Texture &texture_sheet)
     this->createHitboxComponent(this->sprite, 86.f, 81.f, 86.f, 111.f);
     this->createMovementComponent(350.f, 1500.f, 500.f);
     this->createAnimationComponent(texture_sheet);
+    this->createAttributeComponent(1);
 
     this->animationComponent->addAnimation("IDLE", 10.f, 0, 0, 13, 0, 192, 192);
     this->animationComponent->addAnimation("WALK", 7.f, 0, 1, 11, 1, 192, 192);
@@ -101,6 +103,14 @@ void Player::updateAnimation(const float &dt)
 // Functions
 void Player::update(const float &dt)
 {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+    {
+        this->attributecomponent->expGain(20);
+        system("cls");
+        std::cout << this->attributecomponent->debugPrint() << "\n";
+
+    }
+    this->attributecomponent->update();
     this->movementComponent->update(dt);
     this->updateAttack();
     this->updateAnimation(dt);

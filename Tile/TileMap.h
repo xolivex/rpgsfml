@@ -32,7 +32,7 @@ private:
     int maxCullingX = 1;
     int maxCullingY = 1;
     int maxRenderCullingX = 10;
-    int maxRenderCullingY = 6;
+    int maxRenderCullingY = 5;
 
     void clear();
 public:

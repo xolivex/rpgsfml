@@ -77,6 +77,11 @@ void GameState::initTileMap()
     
 }
 
+void GameState::initplayerGui()
+{
+    this->playerGui = new PlayerGUI(this->player);
+}
+
 //Constructors and Destructors
 GameState::GameState(StateData * state_data)
     : State(state_data)
@@ -86,6 +91,7 @@ GameState::GameState(StateData * state_data)
     this->initKeybinds();
     this->initTextures();
     this->initPlayers();
+    this->initplayerGui();
     this->initFonts();
     this->initPausedMenu();
     this->initTileMap();
@@ -95,6 +101,7 @@ GameState::~GameState()
     delete pmenu;
     delete this->player;
     delete tileMap;
+    delete this->playerGui;
 }
 
 void GameState::updateView(const float& dt)
@@ -152,6 +159,7 @@ void GameState::update(const float & dt)
     this->updateMousePositions();
     this->updateKeytime(dt);
     this->updateInput(dt);
+    this->playerGui->update(dt);
     
     
     if(!this->paused)
@@ -185,22 +193,23 @@ void GameState::render(sf::RenderTarget * target)
 
     this->renderTexture.clear();
 
-    renderTexture.setView(this->view);
+    this->renderTexture.setView(this->view);
     this->renderTileMap(renderTexture);
-    renderTexture.setView(this->view);
     this->player->render(renderTexture);
     this->tileMap->deferredStackRender(renderTexture);
+    this->renderTexture.setView(this->renderTexture.getDefaultView());
+    this->playerGui->render(this->renderTexture);
 
     if(this->paused)
     {
-        renderTexture.setView(this->renderTexture.getDefaultView());
-        pmenu->render(renderTexture);
+        this->renderTexture.setView(this->renderTexture.getDefaultView());
+        this->pmenu->render(renderTexture);
     }
 
     //end render
     this->renderSprite.setTexture(this->renderTexture.getTexture());
     //this->renderTexture.draw(this->renderSprite);
-    this->renderTexture.display();
     target->draw(this->renderSprite);
+    this->renderTexture.display();
 
 }

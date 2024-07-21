@@ -50,6 +50,8 @@
         "stack": "cpp",
         "chrono": "cpp",
         "ratio": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "numeric": "cpp",
+        "random": "cpp"
     }
 }

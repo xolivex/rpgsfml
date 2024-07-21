@@ -1,8 +1,8 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "../entities/Player.h"
 #include "../ResourceFiles/GraphicsSettings.h"
+#include "../GUI/PlayerGUI.h"
 
 class Player;
 class GraphicsSettings;
@@ -19,6 +19,7 @@ public:
     GraphicsSettings * gfxSettings;
     std::map<std::string, int> * supportedKeys;
     std::stack<State*> * states;
+    sf::Event * event;
 };
 
 class State{

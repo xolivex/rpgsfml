@@ -138,7 +138,7 @@ void TileMap::updateCollision(const float & dt, sf::Vector2i * mousePosGrid, Ent
                             sf::FloatRect playerbounds = entity->getGlobalBounds();
                             sf::FloatRect wallbounds = this->map[x][y][layer][k]->getGlobalBounds();
                             sf::FloatRect nextPositionBounds = entity->getNextPositionBounds(dt);
-                            std::cout << nextPositionBounds.left << " - " << nextPositionBounds.top << "\n";
+                            
 
                             if (this->map[x][y][layer][k]->getCollision() &&
                                 this->map[x][y][layer][k]->intersect(nextPositionBounds)
@@ -262,6 +262,12 @@ void TileMap::render(sf::RenderTarget &target)
                             else
                             {
                                 this->map[x][y][z][k]->render(target);
+                            }
+
+                            if(this->map[x][y][z][k]->getCollision())
+                            {
+                                this->collisionBox.setPosition(this->map[x][y][z][k]->getPosition().x,this->map[x][y][z][k]->getPosition().y);
+                                target.draw(this->collisionBox);
                             }
                         }
                     }
