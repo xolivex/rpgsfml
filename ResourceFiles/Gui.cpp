@@ -1,10 +1,14 @@
 #include "Gui.h"
 
-gui::Button::Button(float x, float y, float width, float height, sf::Font * font, std::string text, int character_size,
+gui::Button::Button(
+        float x, float y, 
+        float width, float height, 
+        sf::Font * font, 
+        std::string text, 
+        int character_size,
         sf::Color text_idle_color, sf::Color text_hover_color,sf::Color text_active_color,
         sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color,
-        sf::Color outline_idle_color, sf::Color outline_hover_color,
-        sf::Color outline_active_color, int id
+        sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color, int id
         )
 {
     this->id = id;
@@ -134,9 +138,9 @@ gui::DropDownList::DropDownList(
     sf::Font& font, std::string list[], int numbElements, int default_index)
     : font(font), showList(false), keytimeMax(2.f), keytime(0.f)
 {
-    this->activeElement = new gui::Button(
-                x, y, width, height,
-                &this->font, list[default_index], 12,
+    this->activeElement = new gui::Button(x, y, 
+            width, height,
+            &this->font, list[default_index], 12,
                 sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 250), sf::Color(20, 20, 20, 50),
                 sf::Color(70, 70, 70, 150), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
                 sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50)

@@ -36,6 +36,8 @@ void GraphicsSettings::LoadFromFile(std::string path)
 
     if (ifs.is_open())
     {
+        //foi usado getline nessa parte porque o operador >> captura apenas palavrase se o titulo
+        //do jogo tiver espaço ele captura apenas a primeira palavra
         std::getline(ifs, this->title);
         ifs >> this->resolution.width >> this->resolution.height;
         ifs >> this->fullscreen;

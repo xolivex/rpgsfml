@@ -30,11 +30,17 @@ private:
     sf::Color outlineHoverColor;
     sf::Color outlineActiveColor;
 public:
-    Button(float x, float y, float width, float height, sf::Font * font, std::string text, int character_size,
-        sf::Color text_idle_color, sf::Color text_hover_color,sf::Color text_active_color,
+    Button(float x, float y, 
+        float width, float height, 
+        sf::Font * font, 
+        std::string text, 
+        int character_size,
+        sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
         sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor,
-        sf::Color outline_idle_color = sf::Color::Transparent, sf::Color outline_hover_color = sf::Color::Transparent,
-        sf::Color outline_active_color = sf::Color::Transparent, int id = 0
+        sf::Color outline_idle_color = sf::Color::Transparent, 
+        sf::Color outline_hover_color = sf::Color::Transparent,
+        sf::Color outline_active_color = sf::Color::Transparent, 
+        int id = 0
         );
     ~Button();
     //Acessors
@@ -47,7 +53,7 @@ public:
     void setId(unsigned short id);
     //Functions
     void update(const sf::Vector2i& mousePosWindow);
-    void render(sf::RenderTarget& target);
+    void render(sf::RenderTarget & target);
     
 };
 
@@ -86,9 +92,10 @@ private:
     float offset;
     float keytime;
     const float keytimeMax;
+
     sf::RectangleShape selector;
-    sf::Vector2i mousePosGrid;
     sf::RectangleShape bounds;
+    sf::Vector2i mousePosGrid;
     sf::Sprite sheet;
     sf::IntRect textureRect;
     gui::Button * hidden_btn;

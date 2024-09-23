@@ -12,11 +12,13 @@ private:
     float gridSizeF;
     int gridSizeI;
     int layers;
+
     enum renderTypegame
     {
         RENDER_GAME = 0,
         RENDER_EDITOR
     };
+
     int renderType;
     std::string textureFile;
     sf::Vector2i maxSizeWorldGrid;

@@ -20,13 +20,21 @@ void Game::initGameWindow()
 
     if (this->gfxSettings.fullscreen)
     {
-        this->window = new sf::RenderWindow(this->gfxSettings.resolution,
-                                            this->gfxSettings.title, sf::Style::Fullscreen, this->gfxSettings.contextSettings);
+        this->window = new sf::RenderWindow(
+                this->gfxSettings.resolution,
+                this->gfxSettings.title,
+                sf::Style::Fullscreen,
+                this->gfxSettings.contextSettings
+                );
     }
     else
     {
-        this->window = new sf::RenderWindow(this->gfxSettings.resolution,
-                                            this->gfxSettings.title, sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings);
+        this->window = new sf::RenderWindow(
+                this->gfxSettings.resolution,
+                this->gfxSettings.title,
+                sf::Style::Titlebar | sf::Style::Close,
+                this->gfxSettings.contextSettings
+                );
     }
 
     this->window->setFramerateLimit(this->gfxSettings.frameRateLimit);
